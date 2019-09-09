@@ -1,0 +1,81 @@
+PODS:
+  - Alamofire (4.8.2)
+  - AlamofireImage (3.5.2):
+    - Alamofire (~> 4.8)
+  - Differentiator (3.1.0)
+  - "NSObject+Rx (4.4.1)":
+    - RxSwift (~> 4.3)
+  - Realm (3.17.3):
+    - Realm/Headers (= 3.17.3)
+  - Realm/Headers (3.17.3)
+  - RealmSwift (3.17.3):
+    - Realm (= 3.17.3)
+  - RIBs (0.9.1):
+    - RxSwift (~> 4.0)
+  - RxAlamofire (4.4.1):
+    - RxAlamofire/Core (= 4.4.1)
+  - RxAlamofire/Core (4.4.1):
+    - Alamofire (~> 4.8)
+    - RxSwift (~> 4.5)
+  - RxCocoa (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxDataSources (3.1.0):
+    - Differentiator (~> 3.0)
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
+  - RxRealm (0.7.6):
+    - RealmSwift (~> 3.0)
+    - RxSwift (~> 4.0)
+  - RxSwift (4.5.0)
+  - SnapKit (5.0.1)
+  - SVProgressHUD (2.2.5)
+
+DEPENDENCIES:
+  - AlamofireImage (~> 3.5)
+  - "NSObject+Rx"
+  - RealmSwift
+  - RIBs
+  - RxAlamofire
+  - RxCocoa (~> 4.0)
+  - RxDataSources
+  - RxRealm
+  - RxSwift
+  - SnapKit
+  - SVProgressHUD
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - AlamofireImage
+    - Differentiator
+    - "NSObject+Rx"
+    - Realm
+    - RealmSwift
+    - RIBs
+    - RxAlamofire
+    - RxCocoa
+    - RxDataSources
+    - RxRealm
+    - RxSwift
+    - SnapKit
+    - SVProgressHUD
+
+SPEC CHECKSUMS:
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
+  Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
+  "NSObject+Rx": 9884a92f19b610795c431e10b4e601913b59c9e9
+  Realm: 5a1d9d47bfc101dd597668b1a8af4288a2557f6d
+  RealmSwift: b7fdc2d18616621c31df5c7a398a45a2163f8eb0
+  RIBs: 879184fbca567425c488d6b3d14a9c5abfbf9d47
+  RxAlamofire: ed65f451f5a9a59419b0b9e705043dc01410edd9
+  RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
+  RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
+  RxRealm: 5379eddd74f8d617ca7681d1f8d144af25b432b0
+  RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+
+PODFILE CHECKSUM: 4761942a00c93acd3ef6f21a0f3a9bcc4796b685
+
+COCOAPODS: 1.7.5
