@@ -33,7 +33,6 @@
 		EF3DEC782320371F008FB967 /* Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF3DEC712320371E008FB967 /* Utils.framework */; };
 		EF3DEC792320371F008FB967 /* Utils.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EF3DEC712320371E008FB967 /* Utils.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EF3DEC7F23206C81008FB967 /* settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF3DEC7E23206C81008FB967 /* settings.plist */; };
-		EF3DEC8923206DCD008FB967 /* ApplicationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3DEC8823206DCD008FB967 /* ApplicationComponent.swift */; };
 		EF3DEC9223206FC6008FB967 /* Dictionary+merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3DEC8B23206FC6008FB967 /* Dictionary+merge.swift */; };
 		EF3DEC9323206FC6008FB967 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3DEC8D23206FC6008FB967 /* Logger.swift */; };
 		EF3DEC9423206FC6008FB967 /* RequestLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3DEC8F23206FC6008FB967 /* RequestLogger.swift */; };
@@ -68,8 +67,14 @@
 		EFC48F2C23260F8F0086314A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F2B23260F8F0086314A /* ViewModel.swift */; };
 		EFC48F2E23260FC60086314A /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F2D23260FC60086314A /* SectionHeader.swift */; };
 		EFC48F30232610010086314A /* ViewModelTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F2F232610010086314A /* ViewModelTransformer.swift */; };
-		EFC48F322326120B0086314A /* UINavigationController+Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F312326120B0086314A /* UINavigationController+Observer.swift */; };
 		EFC48F342326134D0086314A /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F332326134D0086314A /* Stream.swift */; };
+		EFC48F39232620890086314A /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F35232620890086314A /* Router.swift */; };
+		EFC48F3A232620890086314A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F36232620890086314A /* ViewController.swift */; };
+		EFC48F3B232620890086314A /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F37232620890086314A /* Builder.swift */; };
+		EFC48F3C232620890086314A /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F38232620890086314A /* Interactor.swift */; };
+		EFC48F3E232623500086314A /* ExtendedDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F3D232623500086314A /* ExtendedDependency.swift */; };
+		EFC48F40232627F20086314A /* UIViewController+DidShowObserving.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F3F232627F20086314A /* UIViewController+DidShowObserving.swift */; };
+		EFC48F4223262E8A0086314A /* NetworkStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F4123262E8A0086314A /* NetworkStatus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -196,7 +201,6 @@
 		EF3DEC8123206CC7008FB967 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EF3DEC8223206CC7008FB967 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
 		EF3DEC8323206CC7008FB967 /* Interactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
-		EF3DEC8823206DCD008FB967 /* ApplicationComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationComponent.swift; sourceTree = "<group>"; };
 		EF3DEC8B23206FC6008FB967 /* Dictionary+merge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+merge.swift"; sourceTree = "<group>"; };
 		EF3DEC8D23206FC6008FB967 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		EF3DEC8F23206FC6008FB967 /* RequestLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestLogger.swift; sourceTree = "<group>"; };
@@ -226,8 +230,14 @@
 		EFC48F2B23260F8F0086314A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		EFC48F2D23260FC60086314A /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		EFC48F2F232610010086314A /* ViewModelTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelTransformer.swift; sourceTree = "<group>"; };
-		EFC48F312326120B0086314A /* UINavigationController+Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Observer.swift"; sourceTree = "<group>"; };
 		EFC48F332326134D0086314A /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
+		EFC48F35232620890086314A /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		EFC48F36232620890086314A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EFC48F37232620890086314A /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
+		EFC48F38232620890086314A /* Interactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
+		EFC48F3D232623500086314A /* ExtendedDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedDependency.swift; sourceTree = "<group>"; };
+		EFC48F3F232627F20086314A /* UIViewController+DidShowObserving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+DidShowObserving.swift"; sourceTree = "<group>"; };
+		EFC48F4123262E8A0086314A /* NetworkStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -382,7 +392,11 @@
 			children = (
 				EF3DEC7D232065B3008FB967 /* Resources */,
 				EF3DEC0423202D6C008FB967 /* AppDelegate.swift */,
-				EF3DEC8823206DCD008FB967 /* ApplicationComponent.swift */,
+				EFC48F35232620890086314A /* Router.swift */,
+				EFC48F36232620890086314A /* ViewController.swift */,
+				EFC48F37232620890086314A /* Builder.swift */,
+				EFC48F38232620890086314A /* Interactor.swift */,
+				EFC48F3D232623500086314A /* ExtendedDependency.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -407,8 +421,8 @@
 		EF3DEC3F232036E6008FB967 /* Albums */ = {
 			isa = PBXGroup;
 			children = (
-				EF3DEC9C232073D4008FB967 /* FetchService.swift */,
 				EF3DEC9E2320F0FB008FB967 /* Models */,
+				EF3DEC9C232073D4008FB967 /* FetchService.swift */,
 				EF3DEC40232036E6008FB967 /* Albums.h */,
 				EF3DEC41232036E6008FB967 /* Info.plist */,
 			);
@@ -429,8 +443,8 @@
 			children = (
 				EF3DEC6223203715008FB967 /* RIBsExtensions.h */,
 				EF3DEC6323203715008FB967 /* Info.plist */,
-				EFC48F312326120B0086314A /* UINavigationController+Observer.swift */,
 				EFC48F332326134D0086314A /* Stream.swift */,
+				EFC48F3F232627F20086314A /* UIViewController+DidShowObserving.swift */,
 			);
 			path = RIBsExtensions;
 			sourceTree = "<group>";
@@ -480,6 +494,7 @@
 				EF3DEC8F23206FC6008FB967 /* RequestLogger.swift */,
 				EF3DEC9023206FC6008FB967 /* ApiClient.swift */,
 				EF3DEC9123206FC6008FB967 /* RequestParamsConvertible.swift */,
+				EFC48F4123262E8A0086314A /* NetworkStatus.swift */,
 			);
 			path = ApiClient;
 			sourceTree = "<group>";
@@ -622,13 +637,13 @@
 			buildRules = (
 			);
 			dependencies = (
+				EF3DEC772320371F008FB967 /* PBXTargetDependency */,
+				EF3DECCB23210043008FB967 /* PBXTargetDependency */,
+				EF3DEC6623203715008FB967 /* PBXTargetDependency */,
 				EF3DEC33232036CE008FB967 /* PBXTargetDependency */,
 				EF3DEC44232036E6008FB967 /* PBXTargetDependency */,
 				EF3DEC55232036F6008FB967 /* PBXTargetDependency */,
-				EF3DEC6623203715008FB967 /* PBXTargetDependency */,
-				EF3DEC772320371F008FB967 /* PBXTargetDependency */,
 				EF3DECB32320FAA0008FB967 /* PBXTargetDependency */,
-				EF3DECCB23210043008FB967 /* PBXTargetDependency */,
 			);
 			name = App;
 			productName = LastFMClient;
@@ -1094,8 +1109,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF3DEC8923206DCD008FB967 /* ApplicationComponent.swift in Sources */,
+				EFC48F3E232623500086314A /* ExtendedDependency.swift in Sources */,
 				EF3DEC0523202D6C008FB967 /* AppDelegate.swift in Sources */,
+				EFC48F3A232620890086314A /* ViewController.swift in Sources */,
+				EFC48F3B232620890086314A /* Builder.swift in Sources */,
+				EFC48F3C232620890086314A /* Interactor.swift in Sources */,
+				EFC48F39232620890086314A /* Router.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1137,7 +1156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFC48F322326120B0086314A /* UINavigationController+Observer.swift in Sources */,
+				EFC48F40232627F20086314A /* UIViewController+DidShowObserving.swift in Sources */,
 				EFC48F342326134D0086314A /* Stream.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1150,6 +1169,7 @@
 				EF3DEC9323206FC6008FB967 /* Logger.swift in Sources */,
 				EF3DEC9423206FC6008FB967 /* RequestLogger.swift in Sources */,
 				EF3DEC9623206FC6008FB967 /* RequestParamsConvertible.swift in Sources */,
+				EFC48F4223262E8A0086314A /* NetworkStatus.swift in Sources */,
 				EF3DEC9523206FC6008FB967 /* ApiClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

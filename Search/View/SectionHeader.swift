@@ -7,23 +7,23 @@ final class SectionHeader: UIView {
             titleLabel.text = text
         }
     }
-    
+
     init() {
         super.init(frame: .zero)
-        
+
         addSubview(titleLabel)
-        
+
         titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(23)
             make.bottom.equalToSuperview().inset(4)
             make.top.equalToSuperview().offset(4)
         }
     }
-    
+
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1

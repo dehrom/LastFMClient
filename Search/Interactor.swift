@@ -1,8 +1,8 @@
+import os
 import RIBs
 import RxCocoa
 import RxSwift
 import Utils
-import os
 
 public protocol Routing: ViewableRouting {}
 
@@ -16,6 +16,8 @@ public protocol Listener: AnyObject {}
 final class Interactor: PresentableInteractor<Presentable>, Interactable, PresentableListener {
     weak var router: Routing?
     weak var listener: Listener?
+    
+    lazy var selectedModelRelay = PublishRelay<ViewModel.Section.Row>()
 
     init(presenter: Presentable, fetcher: Fetchable, viewModelTranformer: ViewModelTransformer = .init()) {
         self.fetcher = fetcher
@@ -23,11 +25,25 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
         super.init(presenter: presenter)
         presenter.listener = self
     }
+
+    override func didBecomeActive() {
+    }
     
-    func search(with artistName: String) {
+    override func willResignActive() {
+    }
+    
+    func search(with artistName: String?) {
+        guard
+            let artistName = artistName,
+            artistName.count > 0
+        else {
+            presenter.relay.accept(.empty)
+            return
+        }
+
         fetcher.fetch(for: artistName)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
             .map { [viewModelTranformer] in viewModelTranformer.tranform(from: $0) }
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .observeOn(MainScheduler.instance)
             .asDriver(
                 onErrorRecover: {
@@ -37,7 +53,7 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
             ).drive(presenter.relay)
             .disposeOnDeactivate(interactor: self)
     }
-    
+
     private let fetcher: Fetchable
     private let viewModelTranformer: ViewModelTransformer
 }

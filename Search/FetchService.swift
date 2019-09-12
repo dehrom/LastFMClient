@@ -10,14 +10,14 @@ final class Fetcher: Fetchable {
     init(apiClient: ApiClient) {
         self.apiClient = apiClient
     }
-    
+
     func fetch(for artistName: String) -> Observable<SearchResponse> {
         return apiClient.get(
             parameters: SearchRequest(artist: artistName),
             resultType: SearchResponse.self
         )
     }
-    
+
     private let apiClient: ApiClient
 }
 

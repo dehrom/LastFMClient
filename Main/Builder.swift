@@ -1,9 +1,11 @@
 import RIBs
-import Utils
+import RIBsExtensions
 import Search
+import Utils
 
 public protocol Dependency: RIBs.Dependency {
     var apiClient: ApiClient { get }
+    var networkStatusStream: ImmutableStream<NetworkStatus> { get }
 }
 
 final class Component: RIBs.Component<Dependency> {}
@@ -11,7 +13,7 @@ final class Component: RIBs.Component<Dependency> {}
 // MARK: - Builder
 
 public protocol Buildable: RIBs.Buildable {
-    func build() -> LaunchRouting
+    func build(withListener listener: Listener) -> Routing
 }
 
 public final class Builder: RIBs.Builder<Dependency>, Buildable {
@@ -19,10 +21,11 @@ public final class Builder: RIBs.Builder<Dependency>, Buildable {
         super.init(dependency: dependency)
     }
 
-    public func build() -> LaunchRouting {
+    public func build(withListener listener: Listener) -> Routing {
         let component = Component(dependency: dependency)
         let viewController = ViewController()
         let interactor = Interactor(presenter: viewController)
+        interactor.listener = listener
         return Router(
             interactor: interactor,
             viewController: viewController,

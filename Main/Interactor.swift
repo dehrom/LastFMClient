@@ -7,7 +7,7 @@ import RxRealm
 import RxSwift
 import Utils
 
-protocol Routing: ViewableRouting {
+public protocol Routing: ViewableRouting {
     func routeToSearchScreen()
 }
 
@@ -16,8 +16,15 @@ protocol Presentable: RIBs.Presentable {
     var relay: BehaviorRelay<ViewModel> { get set }
 }
 
+public protocol Listener: AnyObject {}
+
 final class Interactor: PresentableInteractor<Presentable>, Interactable, PresentableListener {
+    func didCallClose() {
+        
+    }
+    
     weak var router: Routing?
+    weak var listener: Listener?
 
     init(presenter: Presentable, transformer: ViewModelTransformer = .init()) {
         self.transformer = transformer
