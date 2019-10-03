@@ -7,7 +7,7 @@ protocol AlbumsFetchable: AnyObject {
 }
 
 final class AlbumsFetcher: AlbumsFetchable {
-    init(_ apiClient: ApiClient) {
+    init(apiClient: ApiClient) {
         self.apiClient = apiClient
     }
 

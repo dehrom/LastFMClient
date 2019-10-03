@@ -23,7 +23,7 @@ public extension Reactive where Base: UIViewController {
 
     private func navigationControllerAccessor() -> Observable<UINavigationController> {
         return methodInvoked(#selector(UIViewController.loadView))
-            .map { [base] _ in base.navigationController }
+            .map { [weak base] _ in base?.navigationController }
             .flatMap(Observable.from(optional:))
     }
 }

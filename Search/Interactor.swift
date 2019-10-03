@@ -4,11 +4,13 @@ import RxCocoa
 import RxSwift
 import Utils
 
-public protocol Routing: ViewableRouting {}
+public protocol Routing: ViewableRouting {
+    func routeToAlbums(with artisName: String)
+}
 
 protocol Presentable: RIBs.Presentable {
     var listener: PresentableListener? { get set }
-    var relay: BehaviorRelay<ViewModel> { get }
+    var relay: BehaviorRelay<ViewModel?> { get }
 }
 
 public protocol Listener: AnyObject {}
@@ -16,7 +18,7 @@ public protocol Listener: AnyObject {}
 final class Interactor: PresentableInteractor<Presentable>, Interactable, PresentableListener {
     weak var router: Routing?
     weak var listener: Listener?
-    
+
     lazy var selectedModelRelay = PublishRelay<ViewModel.Section.Row>()
 
     init(presenter: Presentable, fetcher: Fetchable, viewModelTranformer: ViewModelTransformer = .init()) {
@@ -27,17 +29,17 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
     }
 
     override func didBecomeActive() {
+        selectedModelRelay.map { $0.title }
+            .bind(onNext: { [router] in router?.routeToAlbums(with: $0) })
+            .disposeOnDeactivate(interactor: self)
     }
-    
-    override func willResignActive() {
-    }
-    
+
     func search(with artistName: String?) {
         guard
             let artistName = artistName,
             artistName.count > 0
         else {
-            presenter.relay.accept(.empty)
+            presenter.relay.accept(.empty(""))
             return
         }
 
@@ -48,7 +50,7 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
             .asDriver(
                 onErrorRecover: {
                     os_log(.error, log: .logic, "failed to fetch search result, error: %@", $0.localizedDescription)
-                    return .just(.empty)
+                    return .just(.empty(""))
                 }
             ).drive(presenter.relay)
             .disposeOnDeactivate(interactor: self)

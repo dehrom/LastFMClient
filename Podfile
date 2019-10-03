@@ -82,7 +82,7 @@ post_install do |installer|
     
     if !['RIBs', 'RxCocoa'].include? target.name
       target.build_configurations.each do |config|
-        config.build_settings['SWIFT_VERSION'] = '5.0'
+        config.build_settings['SWIFT_VERSION'] = '5.1'
       end
     else
       target.build_configurations.each do |config|

@@ -1,8 +1,11 @@
+import Albums
 import RIBs
+import RIBsExtensions
 import Utils
 
 public protocol Dependency: RIBs.Dependency {
     var apiClient: ApiClient { get }
+    var networkStatusStream: ImmutableStream<NetworkStatus> { get }
 }
 
 final class Component: RIBs.Component<Dependency> {
@@ -25,6 +28,10 @@ public final class Builder: RIBs.Builder<Dependency>, Buildable {
         let viewController = ViewController()
         let interactor = Interactor(presenter: viewController, fetcher: component.fetcher)
         interactor.listener = listener
-        return Router(interactor: interactor, viewController: viewController)
+        return Router(
+            interactor: interactor,
+            viewController: viewController,
+            albumsBuilder: Albums.Builder(dependency: component)
+        )
     }
 }

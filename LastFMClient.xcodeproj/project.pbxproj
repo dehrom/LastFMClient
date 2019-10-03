@@ -14,6 +14,24 @@
 		DC317AFA0B978BD4517B7BE4 /* Pods_ManagedModels.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3500C169D48FAAA0D413F19F /* Pods_ManagedModels.framework */; };
 		DFA86EA88451226ACBABF4CF /* Pods_Search.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6962DCD3BF3141130D097E1F /* Pods_Search.framework */; };
 		E5F3984B09284D5B9F2714AA /* Pods_Albums.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77A78D9104E7F1E0F22AD69E /* Pods_Albums.framework */; };
+		EF02488B232CF42500CFC71A /* TrackManagedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF02488A232CF42500CFC71A /* TrackManagedModel.swift */; };
+		EF02488E232CF5A100CFC71A /* AboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF02488D232CF5A100CFC71A /* AboutCell.swift */; };
+		EF024890232CF5B800CFC71A /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF02488F232CF5B800CFC71A /* TrackCell.swift */; };
+		EF024892232CF5D000CFC71A /* InformationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF024891232CF5D000CFC71A /* InformationCell.swift */; };
+		EF024895232CF5F100CFC71A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF024894232CF5F100CFC71A /* ViewModel.swift */; };
+		EF024897232CF60D00CFC71A /* TrackResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF024896232CF60D00CFC71A /* TrackResponse.swift */; };
+		EF024899232CF7C600CFC71A /* FetchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF024898232CF7C600CFC71A /* FetchService.swift */; };
+		EF02489C232D205100CFC71A /* AlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF02489B232D205100CFC71A /* AlbumCell.swift */; };
+		EF02489F232D212B00CFC71A /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF02489E232D212B00CFC71A /* View.swift */; };
+		EF0248A2232F4EDE00CFC71A /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0248A0232F4E7000CFC71A /* View.swift */; };
+		EF147D0E23363D2500ADAFCC /* DownloadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF147D0B233602BA00ADAFCC /* DownloadButton.swift */; };
+		EF2343E2232B00790033338A /* ViewModelTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2343E1232B00790033338A /* ViewModelTransformer.swift */; };
+		EF2343E4232B0F480033338A /* Realm+accessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2343E3232B0F480033338A /* Realm+accessor.swift */; };
+		EF2343E9232B13280033338A /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2343E5232B13280033338A /* Router.swift */; };
+		EF2343EA232B13280033338A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2343E6232B13280033338A /* ViewController.swift */; };
+		EF2343EB232B13280033338A /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2343E7232B13280033338A /* Builder.swift */; };
+		EF2343EC232B13280033338A /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2343E8232B13280033338A /* Interactor.swift */; };
+		EF2343EE232B143A0033338A /* ExtendedDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2343ED232B143A0033338A /* ExtendedDependency.swift */; };
 		EF3DEC0523202D6C008FB967 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3DEC0423202D6C008FB967 /* AppDelegate.swift */; };
 		EF3DEC0C23202D6E008FB967 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF3DEC0B23202D6E008FB967 /* Assets.xcassets */; };
 		EF3DEC0F23202D6E008FB967 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF3DEC0D23202D6E008FB967 /* LaunchScreen.storyboard */; };
@@ -54,13 +72,22 @@
 		EF3DECCD23210043008FB967 /* ManagedModels.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EF3DECC523210043008FB967 /* ManagedModels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EF3DECD123210049008FB967 /* AlbumManagedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3DEC9823207262008FB967 /* AlbumManagedModel.swift */; };
 		EF3DECD22321004C008FB967 /* ArtistManagedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3DECA62320F92C008FB967 /* ArtistManagedModel.swift */; };
+		EF415E0E2330CE9B00F06A37 /* ViewModelTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF415E0D2330CE9B00F06A37 /* ViewModelTransformer.swift */; };
+		EF415E372332E0C800F06A37 /* AlbumSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF415E362332E0C800F06A37 /* AlbumSaver.swift */; };
+		EF415E382332E42800F06A37 /* ArtistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F22232285830086314A /* ArtistResponse.swift */; };
+		EF493EBA2329C2DD00124F5F /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF493EB62329C2DD00124F5F /* Router.swift */; };
+		EF493EBB2329C2DD00124F5F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF493EB72329C2DD00124F5F /* ViewController.swift */; };
+		EF493EBC2329C2DD00124F5F /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF493EB82329C2DD00124F5F /* Builder.swift */; };
+		EF493EBD2329C2DD00124F5F /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF493EB92329C2DD00124F5F /* Interactor.swift */; };
+		EF493EBF2329C59E00124F5F /* ExtendedDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF493EBE2329C59E00124F5F /* ExtendedDependency.swift */; };
+		EF493EC4232A3DB500124F5F /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF493EC3232A3DB500124F5F /* ViewModel.swift */; };
+		EF493EC7232A400D00124F5F /* AlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF493EC6232A400D00124F5F /* AlbumCell.swift */; };
 		EF5311EB629F8E16EB183742 /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 703A60E17F04630EF1A136D4 /* Pods_App.framework */; };
 		EFC48F1A232168DA0086314A /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F16232168DA0086314A /* Router.swift */; };
 		EFC48F1B232168DA0086314A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F17232168DA0086314A /* ViewController.swift */; };
 		EFC48F1C232168DA0086314A /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F18232168DA0086314A /* Builder.swift */; };
 		EFC48F1D232168DA0086314A /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F19232168DA0086314A /* Interactor.swift */; };
 		EFC48F1F23216AFB0086314A /* ExtendedDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F1E23216AFB0086314A /* ExtendedDependency.swift */; };
-		EFC48F23232285840086314A /* ArtistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F22232285830086314A /* ArtistResponse.swift */; };
 		EFC48F25232285D00086314A /* FetchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F24232285D00086314A /* FetchService.swift */; };
 		EFC48F27232291D90086314A /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F26232291D90086314A /* SearchResponse.swift */; };
 		EFC48F2A23260F290086314A /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F2923260F290086314A /* Cell.swift */; };
@@ -127,6 +154,118 @@
 			remoteGlobalIDString = EF3DECC423210043008FB967;
 			remoteInfo = ManagedModels;
 		};
+		EFC99D112342C99B00FAB272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF3DEBF923202D6C008FB967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3DECC423210043008FB967;
+			remoteInfo = ManagedModels;
+		};
+		EFC99D132342C99B00FAB272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF3DEBF923202D6C008FB967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3DEC5F23203715008FB967;
+			remoteInfo = RIBsExtensions;
+		};
+		EFC99D152342C99B00FAB272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF3DEBF923202D6C008FB967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3DEC702320371E008FB967;
+			remoteInfo = Utils;
+		};
+		EFC99D172342C9A900FAB272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF3DEBF923202D6C008FB967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3DEC4E232036F5008FB967;
+			remoteInfo = Detail;
+		};
+		EFC99D192342C9A900FAB272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF3DEBF923202D6C008FB967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3DECC423210043008FB967;
+			remoteInfo = ManagedModels;
+		};
+		EFC99D1B2342C9A900FAB272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF3DEBF923202D6C008FB967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3DEC5F23203715008FB967;
+			remoteInfo = RIBsExtensions;
+		};
+		EFC99D1D2342C9A900FAB272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF3DEBF923202D6C008FB967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3DEC702320371E008FB967;
+			remoteInfo = Utils;
+		};
+		EFC99D1F2342C9B600FAB272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF3DEBF923202D6C008FB967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3DEC3D232036E6008FB967;
+			remoteInfo = Albums;
+		};
+		EFC99D212342C9B600FAB272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF3DEBF923202D6C008FB967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3DECC423210043008FB967;
+			remoteInfo = ManagedModels;
+		};
+		EFC99D232342C9B600FAB272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF3DEBF923202D6C008FB967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3DEC5F23203715008FB967;
+			remoteInfo = RIBsExtensions;
+		};
+		EFC99D252342C9B600FAB272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF3DEBF923202D6C008FB967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3DEC702320371E008FB967;
+			remoteInfo = Utils;
+		};
+		EFC99D272342C9C300FAB272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF3DEBF923202D6C008FB967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3DECC423210043008FB967;
+			remoteInfo = ManagedModels;
+		};
+		EFC99D292342C9C300FAB272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF3DEBF923202D6C008FB967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3DEC5F23203715008FB967;
+			remoteInfo = RIBsExtensions;
+		};
+		EFC99D2B2342C9C300FAB272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF3DEBF923202D6C008FB967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3DEC2C232036CE008FB967;
+			remoteInfo = Search;
+		};
+		EFC99D2D2342C9C300FAB272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF3DEBF923202D6C008FB967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3DEC702320371E008FB967;
+			remoteInfo = Utils;
+		};
+		EFEFF2DB23456BF000FAA649 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF3DEBF923202D6C008FB967 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3DEC4E232036F5008FB967;
+			remoteInfo = Detail;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -176,6 +315,24 @@
 		B0214EA395FC8FA47EDD7CF2 /* Pods_RIBsExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RIBsExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7354553859270DFF9CE8881 /* Pods_Detail.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Detail.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED433BB64B6BA7EA89E1D1B9 /* Pods-RIBsExtensions.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RIBsExtensions.release.xcconfig"; path = "Target Support Files/Pods-RIBsExtensions/Pods-RIBsExtensions.release.xcconfig"; sourceTree = "<group>"; };
+		EF02488A232CF42500CFC71A /* TrackManagedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackManagedModel.swift; sourceTree = "<group>"; };
+		EF02488D232CF5A100CFC71A /* AboutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutCell.swift; sourceTree = "<group>"; };
+		EF02488F232CF5B800CFC71A /* TrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
+		EF024891232CF5D000CFC71A /* InformationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationCell.swift; sourceTree = "<group>"; };
+		EF024894232CF5F100CFC71A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		EF024896232CF60D00CFC71A /* TrackResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackResponse.swift; sourceTree = "<group>"; };
+		EF024898232CF7C600CFC71A /* FetchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchService.swift; sourceTree = "<group>"; };
+		EF02489B232D205100CFC71A /* AlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCell.swift; sourceTree = "<group>"; };
+		EF02489E232D212B00CFC71A /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		EF0248A0232F4E7000CFC71A /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		EF147D0B233602BA00ADAFCC /* DownloadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadButton.swift; sourceTree = "<group>"; };
+		EF2343E1232B00790033338A /* ViewModelTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelTransformer.swift; sourceTree = "<group>"; };
+		EF2343E3232B0F480033338A /* Realm+accessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Realm+accessor.swift"; sourceTree = "<group>"; };
+		EF2343E5232B13280033338A /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		EF2343E6232B13280033338A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EF2343E7232B13280033338A /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
+		EF2343E8232B13280033338A /* Interactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
+		EF2343ED232B143A0033338A /* ExtendedDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedDependency.swift; sourceTree = "<group>"; };
 		EF3DEC0123202D6C008FB967 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF3DEC0423202D6C008FB967 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF3DEC0B23202D6E008FB967 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -218,6 +375,15 @@
 		EF3DECC523210043008FB967 /* ManagedModels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ManagedModels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF3DECC723210043008FB967 /* ManagedModels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManagedModels.h; sourceTree = "<group>"; };
 		EF3DECC823210043008FB967 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF415E0D2330CE9B00F06A37 /* ViewModelTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelTransformer.swift; sourceTree = "<group>"; };
+		EF415E362332E0C800F06A37 /* AlbumSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumSaver.swift; sourceTree = "<group>"; };
+		EF493EB62329C2DD00124F5F /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		EF493EB72329C2DD00124F5F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EF493EB82329C2DD00124F5F /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
+		EF493EB92329C2DD00124F5F /* Interactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
+		EF493EBE2329C59E00124F5F /* ExtendedDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedDependency.swift; sourceTree = "<group>"; };
+		EF493EC3232A3DB500124F5F /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		EF493EC6232A400D00124F5F /* AlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCell.swift; sourceTree = "<group>"; };
 		EFC48F16232168DA0086314A /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		EFC48F17232168DA0086314A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EFC48F18232168DA0086314A /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
@@ -355,6 +521,36 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		EF02488C232CF58F00CFC71A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EF02488D232CF5A100CFC71A /* AboutCell.swift */,
+				EF02488F232CF5B800CFC71A /* TrackCell.swift */,
+				EF024891232CF5D000CFC71A /* InformationCell.swift */,
+				EF147D0B233602BA00ADAFCC /* DownloadButton.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EF024893232CF5E600CFC71A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EF024894232CF5F100CFC71A /* ViewModel.swift */,
+				EF024896232CF60D00CFC71A /* TrackResponse.swift */,
+				EFC48F22232285830086314A /* ArtistResponse.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EF02489D232D20FC00CFC71A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EF02489B232D205100CFC71A /* AlbumCell.swift */,
+				EF02489E232D212B00CFC71A /* View.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		EF3DEBF823202D6C008FB967 = {
 			isa = PBXGroup;
 			children = (
@@ -414,6 +610,7 @@
 				EFC48F19232168DA0086314A /* Interactor.swift */,
 				EFC48F24232285D00086314A /* FetchService.swift */,
 				EFC48F2F232610010086314A /* ViewModelTransformer.swift */,
+				EF493EBE2329C59E00124F5F /* ExtendedDependency.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -421,10 +618,17 @@
 		EF3DEC3F232036E6008FB967 /* Albums */ = {
 			isa = PBXGroup;
 			children = (
+				EF493EC5232A400300124F5F /* View */,
 				EF3DEC9E2320F0FB008FB967 /* Models */,
 				EF3DEC9C232073D4008FB967 /* FetchService.swift */,
+				EF493EB62329C2DD00124F5F /* Router.swift */,
+				EF493EB72329C2DD00124F5F /* ViewController.swift */,
+				EF493EB82329C2DD00124F5F /* Builder.swift */,
+				EF493EB92329C2DD00124F5F /* Interactor.swift */,
 				EF3DEC40232036E6008FB967 /* Albums.h */,
 				EF3DEC41232036E6008FB967 /* Info.plist */,
+				EF2343E1232B00790033338A /* ViewModelTransformer.swift */,
+				EF2343ED232B143A0033338A /* ExtendedDependency.swift */,
 			);
 			path = Albums;
 			sourceTree = "<group>";
@@ -432,8 +636,17 @@
 		EF3DEC50232036F6008FB967 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				EF024893232CF5E600CFC71A /* Model */,
+				EF02488C232CF58F00CFC71A /* View */,
 				EF3DEC51232036F6008FB967 /* Detail.h */,
 				EF3DEC52232036F6008FB967 /* Info.plist */,
+				EF2343E5232B13280033338A /* Router.swift */,
+				EF2343E6232B13280033338A /* ViewController.swift */,
+				EF2343E7232B13280033338A /* Builder.swift */,
+				EF2343E8232B13280033338A /* Interactor.swift */,
+				EF024898232CF7C600CFC71A /* FetchService.swift */,
+				EF415E0D2330CE9B00F06A37 /* ViewModelTransformer.swift */,
+				EF415E362332E0C800F06A37 /* AlbumSaver.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -476,6 +689,7 @@
 			isa = PBXGroup;
 			children = (
 				EF3DEC8B23206FC6008FB967 /* Dictionary+merge.swift */,
+				EF2343E3232B0F480033338A /* Realm+accessor.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -511,6 +725,7 @@
 			isa = PBXGroup;
 			children = (
 				EF3DEC9A232073B4008FB967 /* AlbumsResponse.swift */,
+				EF493EC3232A3DB500124F5F /* ViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -518,7 +733,6 @@
 		EF3DECA52320F90F008FB967 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				EFC48F22232285830086314A /* ArtistResponse.swift */,
 				EFC48F26232291D90086314A /* SearchResponse.swift */,
 				EFC48F2B23260F8F0086314A /* ViewModel.swift */,
 			);
@@ -528,15 +742,16 @@
 		EF3DECAE2320FAA0008FB967 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				EF02489D232D20FC00CFC71A /* View */,
 				EF3DEC9723207221008FB967 /* Models */,
 				EF3DEC8023206CC7008FB967 /* Router.swift */,
 				EF3DEC8123206CC7008FB967 /* ViewController.swift */,
 				EF3DEC8223206CC7008FB967 /* Builder.swift */,
 				EF3DEC8323206CC7008FB967 /* Interactor.swift */,
 				EF3DECA32320F6C7008FB967 /* ViewModelTransformer.swift */,
+				EFC48F1E23216AFB0086314A /* ExtendedDependency.swift */,
 				EF3DECAF2320FAA0008FB967 /* Main.h */,
 				EF3DECB02320FAA0008FB967 /* Info.plist */,
-				EFC48F1E23216AFB0086314A /* ExtendedDependency.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -546,10 +761,19 @@
 			children = (
 				EF3DECA62320F92C008FB967 /* ArtistManagedModel.swift */,
 				EF3DEC9823207262008FB967 /* AlbumManagedModel.swift */,
+				EF02488A232CF42500CFC71A /* TrackManagedModel.swift */,
 				EF3DECC723210043008FB967 /* ManagedModels.h */,
 				EF3DECC823210043008FB967 /* Info.plist */,
 			);
 			path = ManagedModels;
+			sourceTree = "<group>";
+		};
+		EF493EC5232A400300124F5F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EF493EC6232A400D00124F5F /* AlbumCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		EFC48F2823260E810086314A /* View */ = {
@@ -557,6 +781,7 @@
 			children = (
 				EFC48F2923260F290086314A /* Cell.swift */,
 				EFC48F2D23260FC60086314A /* SectionHeader.swift */,
+				EF0248A0232F4E7000CFC71A /* View.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -663,6 +888,10 @@
 			buildRules = (
 			);
 			dependencies = (
+				EFC99D202342C9B600FAB272 /* PBXTargetDependency */,
+				EFC99D222342C9B600FAB272 /* PBXTargetDependency */,
+				EFC99D242342C9B600FAB272 /* PBXTargetDependency */,
+				EFC99D262342C9B600FAB272 /* PBXTargetDependency */,
 			);
 			name = Search;
 			productName = Search;
@@ -682,6 +911,10 @@
 			buildRules = (
 			);
 			dependencies = (
+				EFC99D182342C9A900FAB272 /* PBXTargetDependency */,
+				EFC99D1A2342C9A900FAB272 /* PBXTargetDependency */,
+				EFC99D1C2342C9A900FAB272 /* PBXTargetDependency */,
+				EFC99D1E2342C9A900FAB272 /* PBXTargetDependency */,
 			);
 			name = Albums;
 			productName = Albums;
@@ -701,6 +934,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				EFC99D122342C99B00FAB272 /* PBXTargetDependency */,
+				EFC99D142342C99B00FAB272 /* PBXTargetDependency */,
+				EFC99D162342C99B00FAB272 /* PBXTargetDependency */,
 			);
 			name = Detail;
 			productName = Detail;
@@ -758,6 +994,11 @@
 			buildRules = (
 			);
 			dependencies = (
+				EFEFF2DC23456BF000FAA649 /* PBXTargetDependency */,
+				EFC99D282342C9C300FAB272 /* PBXTargetDependency */,
+				EFC99D2A2342C9C300FAB272 /* PBXTargetDependency */,
+				EFC99D2C2342C9C300FAB272 /* PBXTargetDependency */,
+				EFC99D2E2342C9C300FAB272 /* PBXTargetDependency */,
 			);
 			name = Main;
 			productName = Main;
@@ -1122,11 +1363,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF0248A2232F4EDE00CFC71A /* View.swift in Sources */,
 				EFC48F27232291D90086314A /* SearchResponse.swift in Sources */,
 				EFC48F2C23260F8F0086314A /* ViewModel.swift in Sources */,
 				EFC48F2E23260FC60086314A /* SectionHeader.swift in Sources */,
+				EF493EBF2329C59E00124F5F /* ExtendedDependency.swift in Sources */,
 				EFC48F1B232168DA0086314A /* ViewController.swift in Sources */,
-				EFC48F23232285840086314A /* ArtistResponse.swift in Sources */,
 				EFC48F1A232168DA0086314A /* Router.swift in Sources */,
 				EFC48F30232610010086314A /* ViewModelTransformer.swift in Sources */,
 				EFC48F1D232168DA0086314A /* Interactor.swift in Sources */,
@@ -1140,8 +1382,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF2343E2232B00790033338A /* ViewModelTransformer.swift in Sources */,
+				EF493EBB2329C2DD00124F5F /* ViewController.swift in Sources */,
+				EF2343EE232B143A0033338A /* ExtendedDependency.swift in Sources */,
 				EF3DECA02320F122008FB967 /* AlbumsResponse.swift in Sources */,
 				EF3DEC9F2320F112008FB967 /* FetchService.swift in Sources */,
+				EF493EBC2329C2DD00124F5F /* Builder.swift in Sources */,
+				EF493EBD2329C2DD00124F5F /* Interactor.swift in Sources */,
+				EF493EBA2329C2DD00124F5F /* Router.swift in Sources */,
+				EF493EC4232A3DB500124F5F /* ViewModel.swift in Sources */,
+				EF493EC7232A400D00124F5F /* AlbumCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1149,6 +1399,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF415E0E2330CE9B00F06A37 /* ViewModelTransformer.swift in Sources */,
+				EF415E372332E0C800F06A37 /* AlbumSaver.swift in Sources */,
+				EF2343E9232B13280033338A /* Router.swift in Sources */,
+				EF2343EA232B13280033338A /* ViewController.swift in Sources */,
+				EF024897232CF60D00CFC71A /* TrackResponse.swift in Sources */,
+				EF147D0E23363D2500ADAFCC /* DownloadButton.swift in Sources */,
+				EF024892232CF5D000CFC71A /* InformationCell.swift in Sources */,
+				EF024899232CF7C600CFC71A /* FetchService.swift in Sources */,
+				EF415E382332E42800F06A37 /* ArtistResponse.swift in Sources */,
+				EF02488E232CF5A100CFC71A /* AboutCell.swift in Sources */,
+				EF2343EB232B13280033338A /* Builder.swift in Sources */,
+				EF2343EC232B13280033338A /* Interactor.swift in Sources */,
+				EF024895232CF5F100CFC71A /* ViewModel.swift in Sources */,
+				EF024890232CF5B800CFC71A /* TrackCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1170,6 +1434,7 @@
 				EF3DEC9423206FC6008FB967 /* RequestLogger.swift in Sources */,
 				EF3DEC9623206FC6008FB967 /* RequestParamsConvertible.swift in Sources */,
 				EFC48F4223262E8A0086314A /* NetworkStatus.swift in Sources */,
+				EF2343E4232B0F480033338A /* Realm+accessor.swift in Sources */,
 				EF3DEC9523206FC6008FB967 /* ApiClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1181,7 +1446,9 @@
 				EF3DECBD2320FABC008FB967 /* ViewModelTransformer.swift in Sources */,
 				EFC48F1F23216AFB0086314A /* ExtendedDependency.swift in Sources */,
 				EF3DECBA2320FABC008FB967 /* ViewController.swift in Sources */,
+				EF02489C232D205100CFC71A /* AlbumCell.swift in Sources */,
 				EF3DECBB2320FABC008FB967 /* Router.swift in Sources */,
+				EF02489F232D212B00CFC71A /* View.swift in Sources */,
 				EF3DECBC2320FABC008FB967 /* Interactor.swift in Sources */,
 				EF3DECBE2320FAC6008FB967 /* ViewModel.swift in Sources */,
 				EF3DECB92320FABC008FB967 /* Builder.swift in Sources */,
@@ -1192,6 +1459,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF02488B232CF42500CFC71A /* TrackManagedModel.swift in Sources */,
 				EF3DECD22321004C008FB967 /* ArtistManagedModel.swift in Sources */,
 				EF3DECD123210049008FB967 /* AlbumManagedModel.swift in Sources */,
 			);
@@ -1234,6 +1502,86 @@
 			isa = PBXTargetDependency;
 			target = EF3DECC423210043008FB967 /* ManagedModels */;
 			targetProxy = EF3DECCA23210043008FB967 /* PBXContainerItemProxy */;
+		};
+		EFC99D122342C99B00FAB272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3DECC423210043008FB967 /* ManagedModels */;
+			targetProxy = EFC99D112342C99B00FAB272 /* PBXContainerItemProxy */;
+		};
+		EFC99D142342C99B00FAB272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3DEC5F23203715008FB967 /* RIBsExtensions */;
+			targetProxy = EFC99D132342C99B00FAB272 /* PBXContainerItemProxy */;
+		};
+		EFC99D162342C99B00FAB272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3DEC702320371E008FB967 /* Utils */;
+			targetProxy = EFC99D152342C99B00FAB272 /* PBXContainerItemProxy */;
+		};
+		EFC99D182342C9A900FAB272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3DEC4E232036F5008FB967 /* Detail */;
+			targetProxy = EFC99D172342C9A900FAB272 /* PBXContainerItemProxy */;
+		};
+		EFC99D1A2342C9A900FAB272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3DECC423210043008FB967 /* ManagedModels */;
+			targetProxy = EFC99D192342C9A900FAB272 /* PBXContainerItemProxy */;
+		};
+		EFC99D1C2342C9A900FAB272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3DEC5F23203715008FB967 /* RIBsExtensions */;
+			targetProxy = EFC99D1B2342C9A900FAB272 /* PBXContainerItemProxy */;
+		};
+		EFC99D1E2342C9A900FAB272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3DEC702320371E008FB967 /* Utils */;
+			targetProxy = EFC99D1D2342C9A900FAB272 /* PBXContainerItemProxy */;
+		};
+		EFC99D202342C9B600FAB272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3DEC3D232036E6008FB967 /* Albums */;
+			targetProxy = EFC99D1F2342C9B600FAB272 /* PBXContainerItemProxy */;
+		};
+		EFC99D222342C9B600FAB272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3DECC423210043008FB967 /* ManagedModels */;
+			targetProxy = EFC99D212342C9B600FAB272 /* PBXContainerItemProxy */;
+		};
+		EFC99D242342C9B600FAB272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3DEC5F23203715008FB967 /* RIBsExtensions */;
+			targetProxy = EFC99D232342C9B600FAB272 /* PBXContainerItemProxy */;
+		};
+		EFC99D262342C9B600FAB272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3DEC702320371E008FB967 /* Utils */;
+			targetProxy = EFC99D252342C9B600FAB272 /* PBXContainerItemProxy */;
+		};
+		EFC99D282342C9C300FAB272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3DECC423210043008FB967 /* ManagedModels */;
+			targetProxy = EFC99D272342C9C300FAB272 /* PBXContainerItemProxy */;
+		};
+		EFC99D2A2342C9C300FAB272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3DEC5F23203715008FB967 /* RIBsExtensions */;
+			targetProxy = EFC99D292342C9C300FAB272 /* PBXContainerItemProxy */;
+		};
+		EFC99D2C2342C9C300FAB272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3DEC2C232036CE008FB967 /* Search */;
+			targetProxy = EFC99D2B2342C9C300FAB272 /* PBXContainerItemProxy */;
+		};
+		EFC99D2E2342C9C300FAB272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3DEC702320371E008FB967 /* Utils */;
+			targetProxy = EFC99D2D2342C9C300FAB272 /* PBXContainerItemProxy */;
+		};
+		EFEFF2DC23456BF000FAA649 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3DEC4E232036F5008FB967 /* Detail */;
+			targetProxy = EFEFF2DB23456BF000FAA649 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -11,6 +11,6 @@ final class ViewModelTransformer {
 
             return .init(title: artist.name, imageURL: imageURL)
         }
-        return ViewModel(section: [.init(items: rows)])
+        return .sections([.init(items: rows)])
     }
 }

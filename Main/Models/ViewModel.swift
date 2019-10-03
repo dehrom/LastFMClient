@@ -1,27 +1,27 @@
 import Foundation
 import RxDataSources
 
-struct ViewModel {
-    let letters: [String]
-    let section: [Section]
+enum ViewModel {
+    case sections([Section])
+    case empty(String)
 
-    static let empty = ViewModel(letters: [], section: [])
-
-    struct Section: SectionModelType {
-        let title: String
+    struct Section: AnimatableSectionModelType {
+        let title: String = ""
         let items: [Row]
 
-        init(original: Section, items: [Row]) {
-            title = original.title
+        var identity: String {
+            return title
+        }
+
+        init(original _: Section, items: [Row]) {
             self.items = items
         }
 
-        init(title: String, items: [Row]) {
-            self.title = title
+        init(items: [Row]) {
             self.items = items
         }
 
-        struct Row: IdentifiableType {
+        struct Row: IdentifiableType, Equatable {
             let title: String
             let imageURL: URL?
 

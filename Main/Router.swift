@@ -3,8 +3,9 @@ import RIBsExtensions
 import RxCocoa
 import RxSwift
 import Search
+import Detail
 
-protocol Interactable: RIBs.Interactable, Search.Listener {
+protocol Interactable: RIBs.Interactable, Search.Listener, Detail.Listener {
     var router: Routing? { get set }
     var listener: Listener? { get set }
 }
@@ -14,8 +15,9 @@ protocol ViewControllable: RIBs.ViewControllable {
 }
 
 final class Router: ViewableRouter<Interactable, ViewControllable>, Routing {
-    init(interactor: Interactable, viewController: ViewControllable, searchBuilder: Search.Buildable) {
+    init(interactor: Interactable, viewController: ViewControllable, searchBuilder: Search.Buildable, detailBuilder: Detail.Buildable) {
         self.searchBuilder = searchBuilder
+        self.detailBuilder = detailBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
         setupObserving()
@@ -26,12 +28,23 @@ final class Router: ViewableRouter<Interactable, ViewControllable>, Routing {
         attachChild(router)
         viewController.push(router.viewControllable)
     }
+    
+    func routeToDetails(artistName: String, albumTitle: String) {
+        let router = detailBuilder.build(
+            withListener: interactor,
+            configuration: .init(artistName: artistName, albumTitle: albumTitle)
+        )
+        attachChild(router)
+        viewController.push(router.viewControllable)
+    }
 
     func detachChildren() {
         children.forEach(detachChild(_:))
     }
 
     private let searchBuilder: Search.Buildable
+    private let detailBuilder: Detail.Buildable
+    
     private let disposeBag = DisposeBag()
 }
 

@@ -2,6 +2,7 @@ import RIBs
 import RIBsExtensions
 import Search
 import Utils
+import Detail
 
 public protocol Dependency: RIBs.Dependency {
     var apiClient: ApiClient { get }
@@ -29,7 +30,8 @@ public final class Builder: RIBs.Builder<Dependency>, Buildable {
         return Router(
             interactor: interactor,
             viewController: viewController,
-            searchBuilder: Search.Builder(dependency: component)
+            searchBuilder: Search.Builder(dependency: component),
+            detailBuilder: Detail.Builder(dependency: component)
         )
     }
 }

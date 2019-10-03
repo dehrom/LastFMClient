@@ -9,22 +9,21 @@ import Utils
 
 public protocol Routing: ViewableRouting {
     func routeToSearchScreen()
+    func routeToDetails(artistName: String, albumTitle: String)
 }
 
 protocol Presentable: RIBs.Presentable {
     var listener: PresentableListener? { get set }
-    var relay: BehaviorRelay<ViewModel> { get set }
+    var relay: BehaviorRelay<ViewModel?> { get set }
 }
 
 public protocol Listener: AnyObject {}
 
 final class Interactor: PresentableInteractor<Presentable>, Interactable, PresentableListener {
-    func didCallClose() {
-        
-    }
-    
     weak var router: Routing?
     weak var listener: Listener?
+    
+    lazy var didSelectAlbumRelay = BehaviorRelay<Int?>(value: nil)
 
     init(presenter: Presentable, transformer: ViewModelTransformer = .init()) {
         self.transformer = transformer
@@ -33,7 +32,7 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
     }
 
     override func didBecomeActive() {
-        super.didBecomeActive()
+        setupBindings()
         fetch()
     }
 
@@ -42,26 +41,48 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
     }
 
     private let transformer: ViewModelTransformer
+    private let state = BehaviorRelay<[(artistName: String, albumTitle: String)]>(value: [])
 }
 
 private extension Interactor {
-    func fetch() {
-        guard let realm = try? Realm() else { return }
-
-        let result = realm.objects(AlbumManagedModel.self)
-        Observable.collection(from: result)
-            .filter { $0.isEmpty == false }
-            .map { [transformer] (data: Results<AlbumManagedModel>) -> ViewModel in
-                let sortedData = data.sorted(byKeyPath: "title", ascending: true)
-                return transformer.transform(from: sortedData.toArray())
-            }.observeOn(MainScheduler.instance)
-            .ifEmpty(default: .empty)
-            .asDriver(
-                onErrorRecover: {
-                    os_log(.error, log: .logic, "Failed to fetch albums, error: %@", $0.localizedDescription)
-                    return .just(.empty)
+    func setupBindings() {
+        didSelectAlbumRelay.flatMap(Observable.from(optional:))
+            .withLatestFrom(state) { $1[$0] }
+            .bind(
+                onNext: { [weak router] in
+                    router?.routeToDetails(artistName: $0.artistName, albumTitle: $0.albumTitle)
                 }
-            ).drive(presenter.relay)
-            .disposeOnDeactivate(interactor: self)
+            ).disposeOnDeactivate(interactor: self)
+    }
+    
+    func fetch() {
+        let source = Realm.rx.execute {
+            $0.objects(AlbumManagedModel.self)
+        }.asObservable()
+        .map { $0.sorted(byKeyPath: "title", ascending: true) }
+        .flatMap { Observable.collection(from: $0, synchronousStart: false) }
+        .map { $0.toArray() }
+        .share()
+        
+        source.map {
+            $0.compactMap { item -> (artistName: String, albumTitle: String)? in
+                guard let artistName = item.artist?.title else { return nil }
+                return (artistName, item.title)
+            }
+        }.bind(
+            onNext: { [state] in
+                state.accept($0)
+            }
+        ).disposeOnDeactivate(interactor: self)
+        
+        source.map { [transformer] in
+            return transformer.transform(from: $0)
+        }.asDriver(
+            onErrorRecover: { error in
+                print(error)
+                return .empty()
+            }
+        ).drive(presenter.relay)
+        .disposeOnDeactivate(interactor: self)
     }
 }
