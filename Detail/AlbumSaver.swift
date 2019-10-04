@@ -9,30 +9,25 @@ protocol AlbumSaveable: AnyObject {
 
 final class AlbumSaver: AlbumSaveable {
     func saveAlbum(with tracks: TrackResponse, and artist: ArtistResponse) -> Completable {
-        return Completable.create(
-            subscribe: { subscriber -> Disposable in
-                let realm = Realm.get()
-                let disposable = Disposables.create()
-
-                let savedAlbumsIndex = realm.objects(AlbumManagedModel.self)
-                    .index(
-                        matching: "title = %@ AND artist.title = %@",
-                        tracks.album.name,
-                        artist.artist.name
-                    )
-                guard savedAlbumsIndex == nil else {
-                    subscriber(.completed)
-                    return disposable
-                }
-
-                let savingTracks = tracks.album.tracks.track.map { track -> TrackManagedModel in
-                    let savingTrack = TrackManagedModel()
-                    savingTrack.title = track.name
-                    savingTrack.duration = Double(track.duration) ?? 0
-                    return savingTrack
-                }
-
-                realm.beginWrite()
+        return Realm.rx.execute { realm in
+            let savedAlbumsIndex = realm.objects(
+                AlbumManagedModel.self
+            ).index(
+                matching: "title = %@ AND artist.title = %@",
+                tracks.album.name,
+                artist.artist.name
+            )
+            
+            guard savedAlbumsIndex == nil else { return }
+            
+            let savingTracks = tracks.album.tracks.track.map { track -> TrackManagedModel in
+                let savingTrack = TrackManagedModel()
+                savingTrack.title = track.name
+                savingTrack.duration = Double(track.duration) ?? 0
+                return savingTrack
+            }
+            
+            try realm.write {
                 let savingArtist = realm.create(
                     ArtistManagedModel.self,
                     value: ["title": artist.artist.name],
@@ -55,22 +50,7 @@ final class AlbumSaver: AlbumSaveable {
                 savingArtist.albums.append(newAlbum)
 
                 realm.add(savingArtist, update: .modified)
-
-                do {
-                    try realm.commitWrite()
-                } catch {
-                    subscriber(.error(error))
-                    realm.cancelWrite()
-                    return disposable
-                }
-
-                subscriber(.completed)
-                return disposable
             }
-        )
-    }
-
-    enum Error: Swift.Error {
-        case failedToSave(Swift.Error)
+        }.asObservable().ignoreElements()
     }
 }

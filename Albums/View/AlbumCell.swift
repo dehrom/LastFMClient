@@ -7,7 +7,7 @@ final class AlbumCell: UICollectionViewCell {
         super.init(frame: frame)
         contentView.addSubview(imageView)
         contentView.addSubview(label)
-
+        
         imageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.centerX.equalToSuperview()
@@ -17,7 +17,7 @@ final class AlbumCell: UICollectionViewCell {
         label.snp.makeConstraints { make in
             make.width.equalTo(imageView)
             make.centerX.equalToSuperview()
-            make.top.equalTo(imageView.snp.bottom).offset(6)
+            make.top.equalTo(imageView.snp.bottom).offset(2)
         }
     }
 
@@ -32,25 +32,8 @@ final class AlbumCell: UICollectionViewCell {
                 filter: RoundedCornersFilter(radius: 2.0)
             )
         }
-        label.text = model.title
-
-        guard model.isLoaded == true else {
-            savedIcon.removeFromSuperview()
-            return
-        }
-
-        imageView.addSubview(savedIcon)
-        savedIcon.snp.makeConstraints {
-            $0.leading.bottom.equalToSuperview().inset(2)
-            $0.size.equalTo(CGSize(width: 15, height: 15))
-        }
+        label.attributedText = model.title
     }
-    
-    private lazy var savedIcon: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "saved"))
-        view.contentMode = .scaleAspectFit
-        return view
-    }()
 
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
@@ -62,7 +45,6 @@ final class AlbumCell: UICollectionViewCell {
 
     private lazy var label: UILabel = {
         let view = UILabel()
-        view.font = UIFont.systemFont(ofSize: 12)
         view.numberOfLines = 1
         return view
     }()

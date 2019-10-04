@@ -1,15 +1,15 @@
 PODS:
-  - Alamofire (4.8.2)
+  - Alamofire (4.9.0)
   - AlamofireImage (3.5.2):
     - Alamofire (~> 4.8)
   - Differentiator (3.1.0)
   - "NSObject+Rx (4.4.1)":
     - RxSwift (~> 4.3)
-  - Realm (3.17.3):
-    - Realm/Headers (= 3.17.3)
-  - Realm/Headers (3.17.3)
-  - RealmSwift (3.17.3):
-    - Realm (= 3.17.3)
+  - Realm (3.19.0):
+    - Realm/Headers (= 3.19.0)
+  - Realm/Headers (3.19.0)
+  - RealmSwift (3.19.0):
+    - Realm (= 3.19.0)
   - RIBs (0.9.1):
     - RxSwift (~> 4.0)
   - RxAlamofire (4.4.1):
@@ -61,12 +61,12 @@ SPEC REPOS:
     - SVProgressHUD
 
 SPEC CHECKSUMS:
-  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
   AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   "NSObject+Rx": 9884a92f19b610795c431e10b4e601913b59c9e9
-  Realm: 5a1d9d47bfc101dd597668b1a8af4288a2557f6d
-  RealmSwift: b7fdc2d18616621c31df5c7a398a45a2163f8eb0
+  Realm: 995d585bcf699aaff226715886c849a29dd3d07f
+  RealmSwift: 35f284a537989f2187b413e5917091948cb87a3f
   RIBs: 879184fbca567425c488d6b3d14a9c5abfbf9d47
   RxAlamofire: ed65f451f5a9a59419b0b9e705043dc01410edd9
   RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0

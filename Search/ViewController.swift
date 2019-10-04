@@ -19,10 +19,9 @@ final class ViewController: UIViewController, Presentable, ViewControllable {
 
     override var navigationItem: UINavigationItem {
         let item = super.navigationItem
-        item.title = "Artists"
+        item.title = "Search artist"
         item.searchController = searchController
         item.hidesSearchBarWhenScrolling = false
-
         return item
     }
 
@@ -30,6 +29,7 @@ final class ViewController: UIViewController, Presentable, ViewControllable {
         let customView = View()
         view = customView
         setupBindings(customView)
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
 
     override func viewDidLoad() {

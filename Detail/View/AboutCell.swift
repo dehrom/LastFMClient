@@ -8,14 +8,16 @@ final class AboutCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        contentView.addSubview(horizontalStack)
-
+        contentView.addSubview(albumImageView)
+        contentView.addSubview(verticalStack)
+        
         albumImageView.snp.makeConstraints {
-            $0.size.equalTo(size)
+            $0.leading.top.bottom.equalToSuperview().inset(6)
         }
         
-        horizontalStack.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(12)
+        verticalStack.snp.makeConstraints {
+            $0.top.trailing.bottom.equalToSuperview().inset(6)
+            $0.leading.equalTo(albumImageView.snp.trailing).offset(6)
         }
 
         downLoadButton.snp.makeConstraints {
@@ -27,6 +29,10 @@ final class AboutCell: UITableViewCell {
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override class var requiresConstraintBasedLayout: Bool {
+        return true
+    }
 
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -36,13 +42,13 @@ final class AboutCell: UITableViewCell {
 
     func configure(with model: ViewModel.About) {
         albumTitleLabel.text = model.title
-        albumTitleLabel.setNeedsLayout()
+        artistTitleLabel.text = model.artistName
 
         if let url = model.imageURL {
             albumImageView.af_setImage(
                 withURL: url,
-                placeholderImage: UIImage(),
-                filter: AspectScaledToFillSizeWithRoundedCornersFilter(size: size, radius: 2.0)
+                filter: AspectScaledToFillSizeFilter(size: size),
+                imageTransition: .crossDissolve(0.3)
             )
         } else {
             albumImageView.image = UIImage()
@@ -52,31 +58,32 @@ final class AboutCell: UITableViewCell {
     }
 
     private lazy var verticalStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [albumTitleLabel, downLoadButton])
+        let stack = UIStackView(arrangedSubviews: [albumTitleLabel, artistTitleLabel, downLoadButton])
         stack.axis = .vertical
-        stack.spacing = 6
-        stack.distribution = .equalSpacing
+        stack.spacing = 2
+        stack.distribution = .fillProportionally
         stack.alignment = .leading
         return stack
     }()
     
-    private lazy var horizontalStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [albumImageView, verticalStack])
-        stack.axis = .horizontal
-        stack.spacing = 12
-        stack.distribution = .fillProportionally
-        stack.alignment = .fill
-        return stack
-    }()
-    
-    private var albumImageView = UIImageView()
+    private lazy var albumImageView = UIImageView(frame: CGRect(origin: .zero, size: size))
 
     private(set) lazy var downLoadButton = DownloadButton()
 
     private lazy var albumTitleLabel: UILabel = {
         let view = UILabel()
         view.numberOfLines = 2
-        view.font = UIFont.systemFont(ofSize: 21, weight: .bold)
+        view.adjustsFontSizeToFitWidth = true
+        view.font = UIFont.systemFont(ofSize: 19, weight: .black)
+        view.lineBreakMode = .byWordWrapping
+        return view
+    }()
+    
+    private lazy var artistTitleLabel: UILabel = {
+        let view = UILabel()
+        view.numberOfLines = 1
+        view.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        view.textColor = UIColor.lightGray
         view.lineBreakMode = .byWordWrapping
         return view
     }()

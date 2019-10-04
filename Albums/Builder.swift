@@ -40,7 +40,7 @@ public final class Builder: RIBs.Builder<Dependency>, Buildable {
             networkStatusStream: component.dependency.networkStatusStream,
             configuration: configuration
         )
-        viewController.title = configuration.artistName
+
         interactor.listener = listener
         return Router(
             interactor: interactor,

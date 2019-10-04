@@ -11,20 +11,20 @@ final class TrackCell: UITableViewCell {
 
         numberLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(6)
-            make.centerY.equalToSuperview()
+            make.top.bottom.equalToSuperview().inset(6)
             make.width.equalTo(30)
         }
 
         titleLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalTo(numberLabel.snp.trailing).inset(4)
+            make.top.bottom.equalToSuperview().inset(4)
+            make.leading.equalTo(numberLabel.snp.trailing).inset(6)
             make.trailing.equalTo(durationLabel.snp.leading).inset(-4)
         }
 
         durationLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(6)
-            make.centerY.equalToSuperview()
-            make.width.equalTo(50)
+            make.width.equalTo(55)
+            make.top.bottom.equalToSuperview().inset(6)
         }
     }
 
@@ -48,7 +48,6 @@ private extension TrackCell {
         let view = UILabel()
         view.numberOfLines = 1
         view.lineBreakMode = .byTruncatingTail
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
 }

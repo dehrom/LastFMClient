@@ -13,6 +13,12 @@ final class ViewController: UIViewController, Presentable, ViewControllable {
     weak var listener: PresentableListener?
 
     lazy var relay = BehaviorRelay<ViewModel>(value: .empty)
+    
+    override var navigationItem: UINavigationItem {
+        let item = super.navigationItem
+        item.title = "Albums"
+        return item
+    }
 
     override func loadView() {
         let layout = UICollectionViewFlowLayout()
@@ -21,11 +27,7 @@ final class ViewController: UIViewController, Presentable, ViewControllable {
         collectionView.contentInset = UIEdgeInsets(top: 12, left: 4, bottom: 0, right: 4)
         view = collectionView
         setupBindings(collectionView)
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
 
     func push(_ viewControllable: RIBs.ViewControllable) {

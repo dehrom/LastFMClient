@@ -54,30 +54,32 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
 private extension Interactor {
     func setupBindings() {
         didSelectAlbumRelay.flatMap(Observable.from(optional:))
-            .map { [configuration] in (configuration.artistName, $0.title) }
+            .map { [configuration] in (configuration.artistName, $0.identity) }
             .bind(onNext: { [weak router] in router?.routeToDetails(artistName: $0, albumTitle: $1) })
             .disposeOnDeactivate(interactor: self)
     }
 
     func fetch() {
-        let savedAlbumsTitles = Observable.collection(
-            from: Realm.get().objects(AlbumManagedModel.self)
-        ).map {
-            $0.toArray().map { $0.title }
-        }.ifEmpty(default: [])
-
+        let savedAlbumsTitles = Realm.rx.execute {
+            $0.objects(AlbumManagedModel.self)
+        }.asObservable()
+        .flatMap {
+            Observable.collection(from: $0, synchronousStart: false)
+        }.map { $0.toArray().map { $0.title } }
+        .ifEmpty(default: [])
+        
         Observable.combineLatest(
             savedAlbumsTitles,
             fetcher.fetchAlbums(for: configuration.artistName)
         ).observeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
-            .map { [viewModelTransformer] in viewModelTransformer.transform(from: $1, with: $0) }
-            .observeOn(MainScheduler.instance)
-            .asDriver(
-                onErrorRecover: {
-                    os_log(.error, log: .logic, "Failed to load albums, error: %@", $0.localizedDescription)
-                    return .just(.empty)
-                }
-            ).drive(presenter.relay)
-            .disposeOnDeactivate(interactor: self)
+        .map { [viewModelTransformer] in viewModelTransformer.transform(from: $1, with: $0) }
+        .observeOn(MainScheduler.instance)
+        .asDriver(
+            onErrorRecover: {
+                os_log(.error, log: .logic, "Failed to load albums, error: %@", $0.localizedDescription)
+                return .just(.empty)
+            }
+        ).drive(presenter.relay)
+        .disposeOnDeactivate(interactor: self)
     }
 }

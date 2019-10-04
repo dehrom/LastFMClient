@@ -12,6 +12,7 @@ protocol Interactable: RIBs.Interactable, Search.Listener, Detail.Listener {
 
 protocol ViewControllable: RIBs.ViewControllable {
     func push(_ viewControllable: RIBs.ViewControllable)
+    func present(_ viewControllable: RIBs.ViewControllable)
 }
 
 final class Router: ViewableRouter<Interactable, ViewControllable>, Routing {
@@ -35,7 +36,7 @@ final class Router: ViewableRouter<Interactable, ViewControllable>, Routing {
             configuration: .init(artistName: artistName, albumTitle: albumTitle)
         )
         attachChild(router)
-        viewController.push(router.viewControllable)
+        viewController.present(router.viewControllable)
     }
 
     func detachChildren() {

@@ -18,7 +18,7 @@ final class ViewController: UIViewController, Presentable, ViewControllable {
 
     override var navigationItem: UINavigationItem {
         let item = super.navigationItem
-        item.title = "Albums"
+        item.title = "Saved Albums"
 
         if item.rightBarButtonItem == nil {
             let barButton = UIBarButtonItem(barButtonSystemItem: .search, target: nil, action: nil)
@@ -36,11 +36,20 @@ final class ViewController: UIViewController, Presentable, ViewControllable {
         let customView = View()
         view = customView
         setupBindings(customView)
+        navigationController?.navigationBar.prefersLargeTitles = false
+        definesPresentationContext = true
     }
 
     func push(_ viewControllable: RIBs.ViewControllable) {
         let viewController = viewControllable.uiviewController
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func present(_ viewControllable: RIBs.ViewControllable) {
+        let viewController = viewControllable.uiviewController
+        viewController.modalPresentationStyle = .popover
+        viewController.modalTransitionStyle = .coverVertical
+        present(viewController, animated: true, completion: nil)
     }
 
     private lazy var dataSource = RxCollectionViewSectionedAnimatedDataSource<ViewModel.Section>(

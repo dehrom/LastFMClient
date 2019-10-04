@@ -26,12 +26,8 @@ extension ViewModel {
     }
 
     struct Album: IdentifiableType, Equatable {
-        let title: String
+        let identity: String
+        let title: NSAttributedString
         let imageURL: URL?
-        let isLoaded: Bool
-
-        var identity: String {
-            return title
-        }
     }
 }

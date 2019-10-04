@@ -175,13 +175,3 @@ private extension Interactor {
         .asObservable()
     }
 }
-
-extension ObservableType where E == NetworkStatus {
-    func changeFrom(_: NetworkStatus, to _: NetworkStatus) -> Observable<NetworkStatus> {
-        return buffer(timeSpan: 1, count: 2, scheduler: MainScheduler.instance).map {
-            (from: $0[0], to: $0[1])
-        }.map { from, to in
-            from == to ? nil : to
-        }.flatMap(Observable.from(optional:))
-    }
-}
