@@ -12,8 +12,8 @@ protocol PresentableListener: AnyObject {
 final class ViewController: UIViewController, Presentable, ViewControllable {
     weak var listener: PresentableListener?
 
-    lazy var relay = BehaviorRelay<ViewModel>(value: .empty)
-    
+    lazy var relay = BehaviorRelay<ViewModel?>(value: nil)
+
     override var navigationItem: UINavigationItem {
         let item = super.navigationItem
         item.title = "Albums"
@@ -21,12 +21,9 @@ final class ViewController: UIViewController, Presentable, ViewControllable {
     }
 
     override func loadView() {
-        let layout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
-        collectionView.contentInset = UIEdgeInsets(top: 12, left: 4, bottom: 0, right: 4)
-        view = collectionView
-        setupBindings(collectionView)
+        let customView = View()
+        view = customView
+        setupBindings(customView)
         navigationController?.navigationBar.prefersLargeTitles = false
     }
 
@@ -46,20 +43,33 @@ final class ViewController: UIViewController, Presentable, ViewControllable {
 extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let availableWidth = collectionView.bounds.inset(by: collectionView.layoutMargins).width
-        let side = availableWidth / 2
+        let side = availableWidth / 2.1
         return CGSize(width: side, height: side)
     }
 }
 
 private extension ViewController {
-    func setupBindings(_ customView: UICollectionView) {
-        customView.rx.setDelegate(self).disposed(by: rx.disposeBag)
+    func setupBindings(_ customView: View) {
+        customView.collectionView.rx.setDelegate(self).disposed(by: rx.disposeBag)
 
-        relay.map { $0.sections }
-            .bind(to: customView.rx.items(dataSource: dataSource))
+        relay.map { model -> String? in
+            guard case let .empty(message) = model else { return nil }
+            return message
+        }.flatMap(Observable.from(optional:))
+            .bind(onNext: customView.showErrorMessage(_:))
             .disposed(by: rx.disposeBag)
 
-        customView.rx
+        relay.map { model -> [ViewModel.Section]? in
+            guard case let .models(sections) = model else { return nil }
+            return sections
+        }.flatMap(Observable.from(optional:))
+            .do(
+                onNext: { _ in customView.hideErrorMessage() }
+            )
+            .bind(to: customView.collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: rx.disposeBag)
+
+        customView.collectionView.rx
             .modelSelected(ViewModel.Album.self)
             .bind(
                 onNext: { [weak listener] row in

@@ -4,20 +4,23 @@ import RxDataSources
 enum ViewModel {
     case sections([Section])
     case empty(String)
+    case isOnline(Bool)
 
     struct Section: AnimatableSectionModelType {
-        let title: String = ""
-        let items: [Row]
+        let title: String
+        var items: [Row]
 
         var identity: String {
             return title
         }
-
-        init(original _: Section, items: [Row]) {
+        
+        init(title: String, items: [Row]) {
+            self.title = title
             self.items = items
         }
 
-        init(items: [Row]) {
+        init(original: Section, items: [Row]) {
+            self.title = original.title
             self.items = items
         }
 

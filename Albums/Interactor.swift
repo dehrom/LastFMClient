@@ -14,7 +14,7 @@ public protocol Routing: ViewableRouting {
 
 protocol Presentable: RIBs.Presentable {
     var listener: PresentableListener? { get set }
-    var relay: BehaviorRelay<ViewModel> { get }
+    var relay: BehaviorRelay<ViewModel?> { get }
 }
 
 public protocol Listener: AnyObject {}
@@ -28,12 +28,10 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
     init(
         presenter: Presentable,
         fetcher: AlbumsFetchable,
-        networkStatusStream: ImmutableStream<NetworkStatus>,
         configuration: Configuration,
         viewModelTransformer: ViewModelTransformer = .init()
     ) {
         self.fetcher = fetcher
-        self.networkStatusStream = networkStatusStream
         self.configuration = configuration
         self.viewModelTransformer = viewModelTransformer
         super.init(presenter: presenter)
@@ -46,7 +44,6 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
     }
 
     private let fetcher: AlbumsFetchable
-    private let networkStatusStream: ImmutableStream<NetworkStatus>
     private let configuration: Configuration
     private let viewModelTransformer: ViewModelTransformer
 }
@@ -63,23 +60,24 @@ private extension Interactor {
         let savedAlbumsTitles = Realm.rx.execute {
             $0.objects(AlbumManagedModel.self)
         }.asObservable()
-        .flatMap {
-            Observable.collection(from: $0, synchronousStart: false)
-        }.map { $0.toArray().map { $0.title } }
-        .ifEmpty(default: [])
-        
+            .flatMap {
+                Observable.collection(from: $0, synchronousStart: false)
+            }.map { $0.toArray().map { $0.title } }
+            .ifEmpty(default: [])
+
         Observable.combineLatest(
             savedAlbumsTitles,
             fetcher.fetchAlbums(for: configuration.artistName)
         ).observeOn(ConcurrentDispatchQueueScheduler(qos: .userInteractive))
-        .map { [viewModelTransformer] in viewModelTransformer.transform(from: $1, with: $0) }
-        .observeOn(MainScheduler.instance)
-        .asDriver(
-            onErrorRecover: {
-                os_log(.error, log: .logic, "Failed to load albums, error: %@", $0.localizedDescription)
-                return .just(.empty)
-            }
-        ).drive(presenter.relay)
-        .disposeOnDeactivate(interactor: self)
+            .map { [viewModelTransformer] in viewModelTransformer.transform(from: $1, with: $0) }
+            .observeOn(MainScheduler.instance)
+            .ifEmpty(default: .empty("Couldn't fetch albums for this Artist, try again."))
+            .asDriver(
+                onErrorRecover: {
+                    os_log(.error, log: .logic, "Failed to load albums, error: %@", $0.localizedDescription)
+                    return .just(.empty("Failed to fetch albums."))
+                }
+            ).drive(presenter.relay)
+            .disposeOnDeactivate(interactor: self)
     }
 }

@@ -77,7 +77,7 @@ private extension ViewController {
             guard case let .empty(string)? = model else { return nil }
             return string
         }.flatMap(Observable.from(optional:))
-            .bind(onNext: { customView.showWarning($0) })
+            .bind(onNext: customView.showErrorMessage(_:))
             .disposed(by: rx.disposeBag)
 
         customView.tableView

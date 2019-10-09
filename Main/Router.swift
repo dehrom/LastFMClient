@@ -1,9 +1,9 @@
+import Detail
 import RIBs
 import RIBsExtensions
 import RxCocoa
 import RxSwift
 import Search
-import Detail
 
 protocol Interactable: RIBs.Interactable, Search.Listener, Detail.Listener {
     var router: Routing? { get set }
@@ -29,7 +29,7 @@ final class Router: ViewableRouter<Interactable, ViewControllable>, Routing {
         attachChild(router)
         viewController.push(router.viewControllable)
     }
-    
+
     func routeToDetails(artistName: String, albumTitle: String) {
         let router = detailBuilder.build(
             withListener: interactor,
@@ -45,7 +45,7 @@ final class Router: ViewableRouter<Interactable, ViewControllable>, Routing {
 
     private let searchBuilder: Search.Buildable
     private let detailBuilder: Detail.Buildable
-    
+
     private let disposeBag = DisposeBag()
 }
 

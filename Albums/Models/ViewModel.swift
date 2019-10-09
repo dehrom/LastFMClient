@@ -1,10 +1,9 @@
 import Foundation
 import RxDataSources
 
-struct ViewModel {
-    let sections: [Section]
-
-    static let empty = ViewModel(sections: [])
+enum ViewModel {
+    case models([Section])
+    case empty(String)
 }
 
 extension ViewModel {

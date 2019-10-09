@@ -37,7 +37,6 @@ public final class Builder: RIBs.Builder<Dependency>, Buildable {
         let interactor = Interactor(
             presenter: viewController,
             fetcher: component.fetcher,
-            networkStatusStream: component.dependency.networkStatusStream,
             configuration: configuration
         )
 

@@ -1,8 +1,8 @@
+import Detail
 import RIBs
 import RIBsExtensions
 import Search
 import Utils
-import Detail
 
 extension Component {
     var apiClient: ApiClient {

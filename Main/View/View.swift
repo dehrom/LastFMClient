@@ -1,7 +1,8 @@
 import SnapKit
+import UIComponents
 import UIKit
 
-final class View: UIView {
+final class View: UIView, ErrorPresentable {
     private(set) lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -24,27 +25,45 @@ final class View: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func showWarning(_ text: String) {
-        warningLabel.text = text
-        addSubview(warningLabel)
-        bringSubviewToFront(warningLabel)
-        warningLabel.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(12)
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        guard originalOffset == nil else { return }
+        originalOffset = collectionView.contentOffset
+    }
+
+    func turnToOfflineMode() {
+        addSubview(offlineModeLabel)
+        offlineModeLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(self.safeAreaInsets.top)
+            $0.leading.width.equalToSuperview()
+            $0.height.equalTo(30)
+        }
+        UIView.animate(withDuration: 0.5) {
+            self.offlineModeLabel.alpha = 1
+            self.collectionView.contentOffset.y -= 30
         }
     }
 
-    func hideWarning() {
-        warningLabel.removeFromSuperview()
+    func turnToOnlineMode() {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.offlineModeLabel.alpha = 0
+            self.collectionView.contentOffset = self.originalOffset ?? .zero
+        }) { isFinished in
+            guard isFinished == true else { return }
+            self.offlineModeLabel.removeFromSuperview()
+        }
     }
 
-    private lazy var warningLabel: UILabel = {
+    private lazy var offlineModeLabel: UILabel = {
         let view = UILabel()
-        view.numberOfLines = 2
-        view.font = .systemFont(ofSize: 20, weight: .heavy)
-        view.textColor = .lightGray
+        view.alpha = 0
+        view.backgroundColor = UIColor.darkGray
         view.textAlignment = .center
-        view.lineBreakMode = .byWordWrapping
+        view.numberOfLines = 1
+        view.textColor = .white
+        view.text = "You are now in offline mode"
         return view
     }()
+
+    private var originalOffset: CGPoint?
 }

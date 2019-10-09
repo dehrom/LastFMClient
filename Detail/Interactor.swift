@@ -1,10 +1,10 @@
 import ManagedModels
 import os
 import RealmSwift
-import RxRealm
 import RIBs
 import RIBsExtensions
 import RxCocoa
+import RxRealm
 import RxSwift
 import Utils
 
@@ -12,7 +12,7 @@ public protocol Routing: ViewableRouting {}
 
 protocol Presentable: RIBs.Presentable {
     var listener: PresentableListener? { get set }
-    var relay: BehaviorRelay<ViewModel> { get }
+    var relay: BehaviorRelay<ViewModel?> { get }
 }
 
 public protocol Listener: AnyObject {}
@@ -42,16 +42,23 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
         loadingDisposable.disposeOnDeactivate(interactor: self)
 
         networkStatusStream.flatMap { [fetchFromRemote, fetchFromLocal] (status: NetworkStatus) -> Observable<ViewModel> in
-                switch status {
-                case .reachable:
-                    return fetchFromRemote()
-                case .notReachable:
+            switch status {
+            case .reachable:
+                return fetchFromRemote().catchError {
+                    os_log(.error, log: .logic, "Failed to fetch album's details from server (switch to local), error: %@", $0.localizedDescription)
                     return fetchFromLocal()
                 }
-            }.take(1)
+            case .notReachable:
+                return fetchFromLocal().catchError {
+                    os_log(.error, log: .logic, "Failed to fetch album's details from local storage, error: %@", $0.localizedDescription)
+                    return .just(.empty("Failed to fetch album's details."))
+                }
+            }
+        }.take(1)
             .subscribeOn(workingScheduler)
             .observeOn(MainScheduler.instance)
-            .asDriver(onErrorJustReturn: .empty)
+            .ifEmpty(default: .empty("There is no data for this album."))
+            .asDriver(onErrorJustReturn: .empty("Failed to fetch album's details."))
             .drive(presenter.relay)
             .disposeOnDeactivate(interactor: self)
     }
@@ -60,27 +67,33 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
         let albumSavingStateCheck = checkExistance().asObservable().share()
 
         let deleteAlbumObservable: Observable<ViewModelTransformer.LoadingState> = albumSavingStateCheck.filter { $0 == true }
-            .flatMap { [deleteAlbum] _ in deleteAlbum().andThen(Observable.just(.preloading)) }
-            .observeOn(MainScheduler.instance)
+            .flatMap { [deleteAlbum] _ in
+                deleteAlbum().andThen(Observable.just(.preloading))
+                    .catchError {
+                        os_log(.error, log: .logic, "Failed to delete album, error: %@", $0.localizedDescription)
+                        return .just(.loaded)
+                    }
+            }.observeOn(MainScheduler.instance)
 
         let saveAlbumObservable: Observable<ViewModelTransformer.LoadingState> = albumSavingStateCheck.filter { $0 == false }
             .flatMap { [saveAlbum] _ in
                 saveAlbum().andThen(Observable.just(.loaded))
-                    .observeOn(MainScheduler.instance)
+                    .catchError {
+                        os_log(.error, log: .logic, "Failed to save album, error: %@", $0.localizedDescription)
+                        return .just(.preloading)
+                    }.observeOn(MainScheduler.instance)
             }.startWith(.loading)
 
         loadingDisposable.disposable = deleteAlbumObservable.ifEmpty(
             switchTo: saveAlbumObservable
         ).withLatestFrom(state.flatMap(Observable.from(optional:))) { (loadingState: $0, tracks: $1) }
-        .observeOn(workingScheduler)
-        .map { [viewModelTransformer] in viewModelTransformer.transform($0.tracks, loadingState: $0.loadingState) }
-        .observeOn(MainScheduler.instance)
-        .asDriver(
-            onErrorRecover: {
-                os_log(.error, log: .logic, "Failed to delete/save album, error: %@", $0.localizedDescription)
-                return .just(.empty)
-            }
-        ).drive(presenter.relay)
+            .observeOn(workingScheduler)
+            .map { [viewModelTransformer] in
+                viewModelTransformer.transform($0.tracks, loadingState: $0.loadingState)
+            }.observeOn(MainScheduler.instance)
+            .ifEmpty(default: .empty("Failed to finish saving/deleting process."))
+            .asDriver(onErrorRecover: { _ in .empty() })
+            .drive(presenter.relay)
     }
 
     private let fetcher: TrackFetchable
@@ -103,9 +116,9 @@ private extension Interactor {
         ).withLatestFrom(
             state.asObservable().flatMap(Observable.from(optional:))
         ) { (artist: $0, tracks: $1) }
-        .flatMap { [albumSaver, workingScheduler] in
-            albumSaver.saveAlbum(with: $0.tracks, and: $0.artist).subscribeOn(workingScheduler)
-        }.asCompletable()
+            .flatMap { [albumSaver, workingScheduler] in
+                albumSaver.saveAlbum(with: $0.tracks, and: $0.artist).subscribeOn(workingScheduler)
+            }.asCompletable()
     }
 
     func checkExistance() -> Maybe<Bool> {
@@ -139,7 +152,7 @@ private extension Interactor {
                 realm.delete(album)
             }
         }.asObservable()
-        .ignoreElements()
+            .ignoreElements()
     }
 
     func fetchFromRemote() -> Observable<ViewModel> {
@@ -148,30 +161,35 @@ private extension Interactor {
             artistName: configuration.artistName
         ).share()
 
-        source.bind(
+        source.subscribe(
             onNext: { [state] model in
                 state.onNext(model)
             }
         ).disposeOnDeactivate(interactor: self)
-        
+
         return Observable.zip(
             source,
             checkExistance().asObservable()
         ).observeOn(workingScheduler)
-        .map { [viewModelTransformer] in
-            viewModelTransformer.transform(
-                $0,
-                loadingState: $1 == true ? .loaded : .preloading
-            )
-        }
+            .map { [viewModelTransformer] in
+                viewModelTransformer.transform(
+                    $0,
+                    loadingState: $1 == true ? .loaded : .preloading
+                )
+            }
     }
 
     func fetchFromLocal() -> Observable<ViewModel> {
         return Realm.rx.execute { [configuration] in
             $0.objects(
-                ArtistManagedModel.self
-            ).filter("title = %@", configuration.artistName)
-        }.map { _ in .empty }
-        .asObservable()
+                AlbumManagedModel.self
+            ).filter(
+                "title = %@ AND artist.title = %@",
+                configuration.albumTitle,
+                configuration.artistName
+            ).first
+        }.asObservable()
+            .flatMap(Observable.from(optional:))
+            .map { [viewModelTransformer] in viewModelTransformer.transform($0) }
     }
 }

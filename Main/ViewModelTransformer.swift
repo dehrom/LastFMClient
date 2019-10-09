@@ -9,10 +9,15 @@ final class ViewModelTransformer {
             return .empty("There are no saved albums in your library")
         }
         
-        let rows = models.map { model -> ViewModel.Section.Row in
-            let imageURL = model.imageURL.map { URL(string: $0) } ?? nil
-            return .init(title: model.title, imageURL: imageURL)
+        let artistsTitles = Set(models.compactMap { $0.artist?.title })
+        let sections = artistsTitles.reduce(into: [ViewModel.Section]()) { buffer, next in
+            let rows = models.filter { $0.artist?.title == next }.map { album -> ViewModel.Section.Row in
+                let imageURL = album.imageURL.map { URL(string: $0) } ?? nil
+                return .init(title: album.title, imageURL: imageURL)
+            }
+            buffer.append(.init(title: next, items: rows))
         }
-        return .sections([.init(items: rows)])
+
+        return .sections(sections)
     }
 }

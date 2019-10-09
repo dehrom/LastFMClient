@@ -12,7 +12,7 @@ protocol PresentableListener: AnyObject {
 final class ViewController: UIViewController, Presentable, ViewControllable {
     weak var listener: PresentableListener?
 
-    lazy var relay = BehaviorRelay<ViewModel>(value: .empty)
+    lazy var relay = BehaviorRelay<ViewModel?>(value: nil)
 
     override var navigationItem: UINavigationItem {
         let item = super.navigationItem
@@ -21,9 +21,7 @@ final class ViewController: UIViewController, Presentable, ViewControllable {
     }
 
     override func loadView() {
-        let customView = UITableView(frame: .zero, style: .plain)
-        customView.allowsSelection = false
-        customView.tableFooterView = UIView()
+        let customView = View()
         view = customView
         setupBindings(customView)
         navigationController?.navigationBar.prefersLargeTitles = false
@@ -38,15 +36,15 @@ final class ViewController: UIViewController, Presentable, ViewControllable {
 }
 
 extension ViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // yep, it's because of AlamofireImage is not set correct size to image at first time, don't know why :(
         guard
-            indexPath.row == 0 && indexPath.section == 0
+            indexPath.row == 0, indexPath.section == 0
         else { return UITableView.automaticDimension }
         return 102
     }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+
+    func tableView(_: UITableView, estimatedHeightForRowAt _: IndexPath) -> CGFloat {
         return 60
     }
 }
@@ -87,13 +85,25 @@ private extension ViewController {
         }
     }
 
-    func setupBindings(_ customView: UITableView) {
-        customView.rx.setDelegate(self).disposed(by: rx.disposeBag)
+    func setupBindings(_ customView: View) {
+        customView.tableView.rx.setDelegate(self).disposed(by: rx.disposeBag)
+        customView.tableView.rx.setDataSource(dataSource).disposed(by: rx.disposeBag)
         
-        relay.map { $0.sections }
-            .filter { $0.isEmpty == false }
-            .bind(to: customView.rx.items(dataSource: dataSource))
-            .disposed(by: rx.disposeBag)
+        relay.flatMap(Observable.from(optional:))
+            .bind(
+                onNext: { [weak self] model in
+                    switch model {
+                    case let .empty(message):
+                        self?.dataSource.setSections([])
+                        customView.tableView.reloadData()
+                        customView.showErrorMessage(message)
+                    case let .models(sections):
+                        customView.hideErrorMessage()
+                        self?.dataSource.setSections(sections)
+                        customView.tableView.reloadData()
+                    }
+                }
+            ).disposed(by: rx.disposeBag)
     }
 }
 

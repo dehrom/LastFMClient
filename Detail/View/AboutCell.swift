@@ -10,11 +10,11 @@ final class AboutCell: UITableViewCell {
 
         contentView.addSubview(albumImageView)
         contentView.addSubview(verticalStack)
-        
+
         albumImageView.snp.makeConstraints {
             $0.leading.top.bottom.equalToSuperview().inset(6)
         }
-        
+
         verticalStack.snp.makeConstraints {
             $0.top.trailing.bottom.equalToSuperview().inset(6)
             $0.leading.equalTo(albumImageView.snp.trailing).offset(6)
@@ -29,7 +29,7 @@ final class AboutCell: UITableViewCell {
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override class var requiresConstraintBasedLayout: Bool {
         return true
     }
@@ -65,7 +65,7 @@ final class AboutCell: UITableViewCell {
         stack.alignment = .leading
         return stack
     }()
-    
+
     private lazy var albumImageView = UIImageView(frame: CGRect(origin: .zero, size: size))
 
     private(set) lazy var downLoadButton = DownloadButton()
@@ -78,7 +78,7 @@ final class AboutCell: UITableViewCell {
         view.lineBreakMode = .byWordWrapping
         return view
     }()
-    
+
     private lazy var artistTitleLabel: UILabel = {
         let view = UILabel()
         view.numberOfLines = 1

@@ -39,7 +39,7 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
             let artistName = artistName,
             artistName.count > 0
         else {
-            presenter.relay.accept(.empty(""))
+            presenter.relay.accept(.sections([]))
             return
         }
 
@@ -50,7 +50,7 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
             .asDriver(
                 onErrorRecover: {
                     os_log(.error, log: .logic, "failed to fetch search result, error: %@", $0.localizedDescription)
-                    return .just(.empty(""))
+                    return .just(.empty("Failed to search albums."))
                 }
             ).drive(presenter.relay)
             .disposeOnDeactivate(interactor: self)

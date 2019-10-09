@@ -1,8 +1,8 @@
+import Detail
 import RIBs
 import RIBsExtensions
 import Search
 import Utils
-import Detail
 
 public protocol Dependency: RIBs.Dependency {
     var apiClient: ApiClient { get }
@@ -25,7 +25,7 @@ public final class Builder: RIBs.Builder<Dependency>, Buildable {
     public func build(withListener listener: Listener) -> Routing {
         let component = Component(dependency: dependency)
         let viewController = ViewController()
-        let interactor = Interactor(presenter: viewController)
+        let interactor = Interactor(presenter: viewController, networkStatusStream: component.dependency.networkStatusStream)
         interactor.listener = listener
         return Router(
             interactor: interactor,

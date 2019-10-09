@@ -57,6 +57,12 @@ final class DownloadButton: UIControl {
                 label.alpha = 1
                 indicator.alpha = 0
                 indicator.stopAnimating()
+            case .disabled:
+                isUserInteractionEnabled = false
+                label.text = "Download"
+                label.alpha = 0.8
+                indicator.alpha = 0
+                indicator.stopAnimating()
             }
         }
     }
@@ -77,6 +83,7 @@ extension DownloadButton {
         case preloading
         case loading
         case loaded
+        case disabled
 
         mutating func nextState() {
             switch self {
@@ -86,6 +93,8 @@ extension DownloadButton {
                 self = .loaded
             case .loaded:
                 self = .preloading
+            case .disabled:
+                break
             }
         }
     }

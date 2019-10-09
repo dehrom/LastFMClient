@@ -17,16 +17,16 @@ final class AlbumSaver: AlbumSaveable {
                 tracks.album.name,
                 artist.artist.name
             )
-            
+
             guard savedAlbumsIndex == nil else { return }
-            
+
             let savingTracks = tracks.album.tracks.track.map { track -> TrackManagedModel in
                 let savingTrack = TrackManagedModel()
                 savingTrack.title = track.name
                 savingTrack.duration = Double(track.duration) ?? 0
                 return savingTrack
             }
-            
+
             try realm.write {
                 let savingArtist = realm.create(
                     ArtistManagedModel.self,

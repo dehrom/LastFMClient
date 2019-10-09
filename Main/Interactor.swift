@@ -2,6 +2,7 @@ import ManagedModels
 import os
 import RealmSwift
 import RIBs
+import RIBsExtensions
 import RxCocoa
 import RxRealm
 import RxSwift
@@ -22,11 +23,16 @@ public protocol Listener: AnyObject {}
 final class Interactor: PresentableInteractor<Presentable>, Interactable, PresentableListener {
     weak var router: Routing?
     weak var listener: Listener?
-    
+
     lazy var didSelectAlbumRelay = BehaviorRelay<Int?>(value: nil)
 
-    init(presenter: Presentable, transformer: ViewModelTransformer = .init()) {
+    init(
+        presenter: Presentable,
+        networkStatusStream: ImmutableStream<NetworkStatus>,
+        transformer: ViewModelTransformer = .init()
+    ) {
         self.transformer = transformer
+        self.networkStatusStream = networkStatusStream
         super.init(presenter: presenter)
         presenter.listener = self
     }
@@ -42,10 +48,19 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
 
     private let transformer: ViewModelTransformer
     private let state = BehaviorRelay<[(artistName: String, albumTitle: String)]>(value: [])
+    private let networkStatusStream: ImmutableStream<NetworkStatus>
 }
 
 private extension Interactor {
     func setupBindings() {
+        networkStatusStream.skipWhile { $0 == .reachable }
+            .distinctUntilChanged()
+            .bind(
+                onNext: { [presenter] status in
+                    presenter.relay.accept(.isOnline(status == .reachable))
+                }
+            ).disposeOnDeactivate(interactor: self)
+
         didSelectAlbumRelay.flatMap(Observable.from(optional:))
             .withLatestFrom(state) { $1[$0] }
             .bind(
@@ -54,16 +69,16 @@ private extension Interactor {
                 }
             ).disposeOnDeactivate(interactor: self)
     }
-    
+
     func fetch() {
         let source = Realm.rx.execute {
             $0.objects(AlbumManagedModel.self)
         }.asObservable()
-        .map { $0.sorted(byKeyPath: "title", ascending: true) }
-        .flatMap { Observable.collection(from: $0, synchronousStart: false) }
-        .map { $0.toArray() }
-        .share()
-        
+            .map { $0.sorted(byKeyPath: "title", ascending: true) }
+            .flatMap { Observable.collection(from: $0, synchronousStart: false) }
+            .map { $0.toArray() }
+            .share()
+
         source.map {
             $0.compactMap { item -> (artistName: String, albumTitle: String)? in
                 guard let artistName = item.artist?.title else { return nil }
@@ -74,15 +89,15 @@ private extension Interactor {
                 state.accept($0)
             }
         ).disposeOnDeactivate(interactor: self)
-        
+
         source.map { [transformer] in
-            return transformer.transform(from: $0)
+            transformer.transform(from: $0)
         }.asDriver(
             onErrorRecover: { error in
                 print(error)
                 return .empty()
             }
         ).drive(presenter.relay)
-        .disposeOnDeactivate(interactor: self)
+            .disposeOnDeactivate(interactor: self)
     }
 }

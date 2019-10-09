@@ -5,13 +5,13 @@ final class ViewModelTransformer {
         let albums = (response.topalbums.album.filter { $0.name != "(null)" })
         guard
             albums.isEmpty == false
-        else { return ViewModel.empty }
+        else { return .models([]) }
 
         let img = UIImage(named: "saved")?.af_imageScaled(to: CGSize(width: 15, height: 15)) ?? UIImage()
         let rows = albums.map { album -> ViewModel.Album in
             let imageURL = album.image.lazy.filter { $0.size == .large }.compactMap { URL(string: $0.text) }.first
             let isLoaded = titlesOfSavedAlbums.contains(album.name)
-            
+
             let title = { () -> NSAttributedString in
                 let font = UIFont.systemFont(ofSize: 12)
                 switch isLoaded {
@@ -21,10 +21,11 @@ final class ViewModelTransformer {
                     return NSAttributedString(string: album.name, attributes: [.font: font])
                 }
             }
-            
+
             return .init(identity: album.name, title: title(), imageURL: imageURL)
         }
-        return .init(sections: [.init(items: rows)])
+
+        return .models([.init(items: rows)])
     }
 }
 
@@ -40,7 +41,7 @@ extension NSAttributedString {
         )
         let resultString = NSMutableAttributedString(attributedString: NSAttributedString(attachment: attachment))
         resultString.append(NSAttributedString(string: " \(string)", attributes: [.font: font]))
-        
+
         self.init(attributedString: resultString)
     }
 }

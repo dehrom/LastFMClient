@@ -9,7 +9,7 @@
    pod 'SVProgressHUD'
    pod 'RxDataSources'
    pod 'NSObject+Rx'
-   pod 'RIBs'
+   pod 'RIBs', '~> 0.9'
  end
 
  def core
@@ -20,7 +20,7 @@
 
 target 'App' do
   use_frameworks!
-  pod 'RIBs'
+  pod 'RIBs', '~> 0.9'
 end
 
 target 'Main' do
@@ -57,7 +57,7 @@ target 'RIBsExtensions' do
   use_frameworks!
   inherit! :search_paths
   
-  pod 'RIBs'
+  pod 'RIBs', '~> 0.9'
   core
 end
 
@@ -75,6 +75,15 @@ target 'ManagedModels' do
   inherit! :search_paths
   
   pod 'RealmSwift'
+end
+
+target 'UIComponents' do
+  use_frameworks!
+  inherit! :search_paths
+  
+  pod 'RxCocoa', '~> 4.0'
+  pod 'RxSwift'
+  pod 'SnapKit'
 end
 
 post_install do |installer|
