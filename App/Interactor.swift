@@ -43,10 +43,8 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
 private extension Interactor {
     func observeNetworkStatus() {
         reachabilityManager?.listener = { [stream] in
-            print($0)
-//            let networkStatus = $0.asNetworkStatus()
-//            stream.update(with: networkStatus)
-            stream.update(with: .reachable)
+            let networkStatus = $0.asNetworkStatus()
+            stream.update(with: networkStatus)
         }
         guard reachabilityManager?.startListening() == true else {
             os_log(.fault, log: .structure, "failed to start listening network status", "")

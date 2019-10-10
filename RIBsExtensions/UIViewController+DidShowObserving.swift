@@ -19,6 +19,7 @@ public extension Reactive where Base: UIViewController {
         }.map { $0.viewController }
             .filter { [weak base] in $0 === base }
             .map { $0 as! Base }
+            .skip(1)
     }
 
     private func navigationControllerAccessor() -> Observable<UINavigationController> {

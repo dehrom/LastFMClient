@@ -624,20 +624,20 @@
 		EF1E99AF234A33DD00EF20C2 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
-				EF1E99C2234A345B00EF20C2 /* State */,
+				EF1E99C2234A345B00EF20C2 /* Error */,
 				EF1E99B0234A33DD00EF20C2 /* UIComponents.h */,
 				EF1E99B1234A33DD00EF20C2 /* Info.plist */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
 		};
-		EF1E99C2234A345B00EF20C2 /* State */ = {
+		EF1E99C2234A345B00EF20C2 /* Error */ = {
 			isa = PBXGroup;
 			children = (
 				EF1E99C0234A343700EF20C2 /* ErrorPresentable.swift */,
 				EF1E99C5234A3EE500EF20C2 /* ErrorView.swift */,
 			);
-			path = State;
+			path = Error;
 			sourceTree = "<group>";
 		};
 		EF3DEBF823202D6C008FB967 = {

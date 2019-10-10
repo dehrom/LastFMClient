@@ -1,6 +1,7 @@
 import Albums
 import RIBs
 import RxSwift
+import RIBsExtensions
 
 protocol Interactable: RIBs.Interactable, Albums.Listener {
     var router: Routing? { get set }
@@ -16,6 +17,7 @@ final class Router: ViewableRouter<Interactable, ViewControllable>, Routing {
         self.albumsBuilder = albumsBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
+        setupObserving()
     }
 
     func routeToAlbums(with artisName: String) {
@@ -24,9 +26,20 @@ final class Router: ViewableRouter<Interactable, ViewControllable>, Routing {
         viewController.push(router.viewControllable)
     }
 
+    private let albumsBuilder: Albums.Buildable
+    private let disposeBag = DisposeBag()
+}
+
+private extension Router {
     func detachChildren() {
         children.forEach(detachChild(_:))
     }
-
-    private let albumsBuilder: Albums.Buildable
+    
+    func setupObserving() {
+        viewControllable.uiviewController
+            .rx
+            .showingStateObserver(for: .didShow)
+            .bind(onNext: { [weak self] _ in self?.detachChildren() })
+            .disposed(by: disposeBag)
+    }
 }

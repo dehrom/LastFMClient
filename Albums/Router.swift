@@ -1,5 +1,7 @@
 import Detail
 import RIBs
+import RxSwift
+import RIBsExtensions
 
 protocol Interactable: RIBs.Interactable, Detail.Listener {
     var router: Routing? { get set }
@@ -19,6 +21,7 @@ final class Router: ViewableRouter<Interactable, ViewControllable>, Routing {
         self.detailBuilder = detailBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
+        setupObserving()
     }
 
     func routeToDetails(artistName: String, albumTitle: String) {
@@ -34,4 +37,19 @@ final class Router: ViewableRouter<Interactable, ViewControllable>, Routing {
     }
 
     private let detailBuilder: Detail.Buildable
+    private let disposeBag = DisposeBag()
+}
+
+private extension Router {
+    func detachChildren() {
+        children.forEach(detachChild(_:))
+    }
+    
+    func setupObserving() {
+        viewControllable.uiviewController
+            .rx
+            .showingStateObserver(for: .didShow)
+            .bind(onNext: { [weak self] _ in self?.detachChildren() })
+            .disposed(by: disposeBag)
+    }
 }

@@ -45,10 +45,6 @@ final class Router: ViewableRouter<Interactable, ViewControllable>, Routing {
         routing.viewControllable.uiviewController.dismiss(animated: true, completion: nil)
     }
 
-    func detachChildren() {
-        children.forEach(detachChild(_:))
-    }
-
     private let searchBuilder: Search.Buildable
     private let detailBuilder: Detail.Buildable
 
@@ -56,11 +52,14 @@ final class Router: ViewableRouter<Interactable, ViewControllable>, Routing {
 }
 
 private extension Router {
+    func detachChildren() {
+        children.forEach(detachChild(_:))
+    }
+    
     func setupObserving() {
         viewControllable.uiviewController
             .rx
             .showingStateObserver(for: .didShow)
-            .skip(2)
             .bind(onNext: { [weak self] _ in self?.detachChildren() })
             .disposed(by: disposeBag)
     }

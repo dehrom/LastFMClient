@@ -212,11 +212,4 @@ private extension Interactor {
             .flatMap(Observable.from(optional:))
             .map { [viewModelTransformer] in viewModelTransformer.transform($0) }
     }
-    
-    enum State {
-        case unavaliable(String)
-        case preloading
-        case loading
-        case loaded
-    }
 }

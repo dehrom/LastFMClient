@@ -27,6 +27,7 @@ final class View: UIView, ErrorPresentable {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        bringSubviewToFront(offlineModeLabel)
         guard originalOffset == nil else { return }
         originalOffset = collectionView.contentOffset
     }
