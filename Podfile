@@ -6,7 +6,6 @@
    pod 'AlamofireImage', '~> 3.5'
    pod 'RxDataSources'
    pod 'SnapKit'
-   pod 'SVProgressHUD'
    pod 'RxDataSources'
    pod 'NSObject+Rx'
    pod 'RIBs', '~> 0.9'
