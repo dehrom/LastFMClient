@@ -30,7 +30,7 @@ final class ViewController: UIViewController, Presentable, ViewControllable {
 
     private lazy var dataSource = RxTableViewSectionedReloadDataSource<ViewModel.Section>(
         configureCell: { [weak self] in
-            guard let self = self else { fatalError("self must not be nil") }
+            guard let self = self else { fatalError("Self must not be nil") }
             return self.configureCell(dataSource: $0, tableView: $1, indexPath: $2, model: $3)
         }
     )
@@ -82,13 +82,13 @@ private extension ViewController {
             cell.configure(with: text)
             return cell
         case (_, _):
-            fatalError("Unexpected model-cell pair!")
+            fatalError("Unexpected model-cell pair")
         }
     }
 
     func setupBindings(_ customView: View) {
         customView.tableView.rx.setDelegate(self).disposed(by: rx.disposeBag)
-        
+
         relay.flatMap { model -> Observable<Void> in
             guard case let .empty(message) = model else { return .empty() }
             return customView.showErrorMessage(message, withButtonText: "Close").asObservable()
@@ -97,15 +97,15 @@ private extension ViewController {
                 listener?.didPressClose()
             }
         ).disposed(by: rx.disposeBag)
-        
+
         relay.map { model -> [ViewModel.Section] in
             guard case let .models(sections) = model else { return [] }
             return sections
         }.filter { $0.isEmpty == false }
-        .do(
-            onNext: { _ in customView.hideErrorMessage() }
-        ).bind(to: customView.tableView.rx.items(dataSource: dataSource))
-        .disposed(by: rx.disposeBag)
+            .do(
+                onNext: { _ in customView.hideErrorMessage() }
+            ).bind(to: customView.tableView.rx.items(dataSource: dataSource))
+            .disposed(by: rx.disposeBag)
     }
 }
 

@@ -55,7 +55,7 @@ private extension Router {
     func detachChildren() {
         children.forEach(detachChild(_:))
     }
-    
+
     func setupObserving() {
         viewControllable.uiviewController
             .rx

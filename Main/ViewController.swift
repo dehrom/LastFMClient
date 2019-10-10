@@ -54,11 +54,11 @@ final class ViewController: UIViewController, Presentable, ViewControllable {
 
     private lazy var dataSource = RxCollectionViewSectionedAnimatedDataSource<ViewModel.Section>.init(
         configureCell: { [weak self] in
-            guard let self = self else { fatalError("self must not be nil") }
+            guard let self = self else { fatalError("Self must not be nil") }
             return self.configureCell(dataSource: $0, collectionView: $1, indexPath: $2, model: $3)
         },
         configureSupplementaryView: { [weak self] in
-            guard let self = self else { fatalError("self must not be nil") }
+            guard let self = self else { fatalError("Self must not be nil") }
             return self.configureSupplementaryView(dataSource: $0, collectionView: $1, kind: $2, indexPath: $3)
         }
     )
@@ -136,7 +136,7 @@ private extension ViewController {
                 withReuseIdentifier: "\(AlbumCell.self)",
                 for: indexPath
             ) as? AlbumCell
-        else { fatalError("unexpected cell type") }
+        else { fatalError("Unexpected cell type") }
 
         cell.configure(with: model)
 
@@ -160,7 +160,7 @@ private extension ViewController {
             withReuseIdentifier: "\(TitleView.self)",
             for: indexPath
         ) as? TitleView
-        else { fatalError("unexpected cell type") }
+        else { fatalError("Unexpected cell type") }
 
         let title = dataSource.sectionModels[indexPath.section].title
         header.configure(with: title)

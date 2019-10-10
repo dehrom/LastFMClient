@@ -31,7 +31,6 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
     }
 
     override func didBecomeActive() {
-        super.didBecomeActive()
         observeNetworkStatus()
         router?.routeToMain()
     }
@@ -46,7 +45,10 @@ private extension Interactor {
             let networkStatus = $0.asNetworkStatus()
             stream.update(with: networkStatus)
         }
-        guard reachabilityManager?.startListening() == true else {
+        guard
+            let manager = reachabilityManager,
+            manager.startListening() == true
+        else {
             os_log(.fault, log: .structure, "failed to start listening network status", "")
             return
         }

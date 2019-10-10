@@ -1,7 +1,7 @@
 import Detail
 import RIBs
-import RxSwift
 import RIBsExtensions
+import RxSwift
 
 protocol Interactable: RIBs.Interactable, Detail.Listener {
     var router: Routing? { get set }
@@ -44,7 +44,7 @@ private extension Router {
     func detachChildren() {
         children.forEach(detachChild(_:))
     }
-    
+
     func setupObserving() {
         viewControllable.uiviewController
             .rx

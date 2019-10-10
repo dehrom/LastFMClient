@@ -51,7 +51,7 @@ final class ViewController: UIViewController, Presentable, ViewControllable {
 
     private lazy var dataSource = RxTableViewSectionedReloadDataSource<ViewModel.Section>(
         configureCell: { [weak self] in
-            guard let self = self else { fatalError("self must not be nil!") }
+            guard let self = self else { fatalError("Self must not be nil") }
             return self.configureCell(dataSource: $0, tableView: $1, indexPath: $2, model: $3)
         }
     )

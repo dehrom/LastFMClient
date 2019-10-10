@@ -71,11 +71,11 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
         let viewModelDisposable = checkExistance().asObservable().flatMap { [startDeletingSequence, startLoadingSequence] isSaved -> Observable<ViewModel> in
             isSaved == true ? startDeletingSequence() : startLoadingSequence()
         }.observeOn(MainScheduler.instance)
-        .asDriver(onErrorJustReturn: .empty("Unknown error"))
-        .drive(presenter.relay)
+            .asDriver(onErrorJustReturn: .empty("Unknown error"))
+            .drive(presenter.relay)
         _ = loadingDisposables.insert(viewModelDisposable)
     }
-    
+
     func didPressClose() {
         listener?.closeScreen()
     }
@@ -102,34 +102,34 @@ private extension Interactor {
             return .just(.empty("Failed to delete album"))
         }
     }
-    
+
     func startLoadingSequence() -> Observable<ViewModel> {
         let saveObservable = saveAlbum().andThen(
             Observable.just(ViewModel.LoadingState.loaded)
         ).share()
-        
+
         let errorHandlingDisposable = saveObservable.materialize().flatMap {
             Observable.from(optional: $0.error)
         }.map { error -> ViewModel in
             os_log(.error, log: .logic, "Failed to save album, error: %@", error.localizedDescription)
             return .empty("Failed to save album")
         }.observeOn(MainScheduler.instance)
-        .bind(to: presenter.relay)
+            .bind(to: presenter.relay)
         _ = loadingDisposables.insert(errorHandlingDisposable)
-        
+
         return saveObservable.materialize().flatMap {
             Observable.from(optional: $0.element)
         }.withLatestFrom(
             tracks.flatMap(Observable.from(optional:))
         ) { (loadingState: $0, tracks: $1) }
-        .map { [viewModelTransformer] in
-            viewModelTransformer.transform($0.tracks, loadingState: $0.loadingState)
-        }.catchError {
-            os_log(.error, log: .logic, "Failed to transform album, error: %@", $0.localizedDescription)
-            return .just(.empty("Failed to save album"))
-        }
+            .map { [viewModelTransformer] in
+                viewModelTransformer.transform($0.tracks, loadingState: $0.loadingState)
+            }.catchError {
+                os_log(.error, log: .logic, "Failed to transform album, error: %@", $0.localizedDescription)
+                return .just(.empty("Failed to save album"))
+            }
     }
-    
+
     func saveAlbum() -> Completable {
         return fetcher.fetchArtist(
             for: configuration.artistName
@@ -189,7 +189,7 @@ private extension Interactor {
 
         return Observable.zip(
             source,
-            checkExistance().asObservable()
+            checkExistance().asObservable().debug()
         ).observeOn(workingScheduler)
             .map { [viewModelTransformer] in
                 viewModelTransformer.transform(
