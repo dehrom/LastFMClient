@@ -98,11 +98,11 @@ private extension Interactor {
         source.map { [transformer] in
             transformer.transform(from: $0)
         }.asDriver(
-            onErrorRecover: { error in
-                print(error)
-                return .empty()
+            onErrorRecover: {
+                os_log(.error, log: .logic, "Failed to fetch saved albums", $0.localizedDescription)
+                return .just(.empty("Failed to fetch saved albums"))
             }
         ).drive(presenter.relay)
-            .disposeOnDeactivate(interactor: self)
+        .disposeOnDeactivate(interactor: self)
     }
 }

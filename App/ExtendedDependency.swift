@@ -1,7 +1,6 @@
 import Main
 import RIBs
 import RIBsExtensions
-import Search
 import Utils
 
 extension Component: Main.Dependency {

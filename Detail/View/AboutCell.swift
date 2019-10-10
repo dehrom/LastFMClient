@@ -30,10 +30,6 @@ final class AboutCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override class var requiresConstraintBasedLayout: Bool {
-        return true
-    }
-
     override func prepareForReuse() {
         super.prepareForReuse()
         var mutableSelf = self

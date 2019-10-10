@@ -189,7 +189,7 @@ private extension Interactor {
 
         return Observable.zip(
             source,
-            checkExistance().asObservable().debug()
+            checkExistance().asObservable()
         ).observeOn(workingScheduler)
             .map { [viewModelTransformer] in
                 viewModelTransformer.transform(
