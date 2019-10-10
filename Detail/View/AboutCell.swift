@@ -17,7 +17,7 @@ final class AboutCell: UITableViewCell {
 
         verticalStack.snp.makeConstraints {
             $0.top.trailing.bottom.equalToSuperview().inset(6)
-            $0.leading.equalTo(albumImageView.snp.trailing).offset(6)
+            $0.leading.equalToSuperview().offset(size.width + 12)
         }
 
         downLoadButton.snp.makeConstraints {
