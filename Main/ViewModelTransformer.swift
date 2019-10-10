@@ -8,7 +8,7 @@ final class ViewModelTransformer {
         else {
             return .empty("There are no saved albums in your library")
         }
-        
+
         let artistsTitles = Set(models.compactMap { $0.artist?.title })
         let sections = artistsTitles.reduce(into: [ViewModel.Section]()) { buffer, next in
             let rows = models.filter { $0.artist?.title == next }.map { album -> ViewModel.Section.Row in

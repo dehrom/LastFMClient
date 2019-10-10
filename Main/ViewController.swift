@@ -70,8 +70,8 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         let side = (availableWidth / 2.1).rounded(.up)
         return CGSize(width: side, height: side)
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+
+    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, referenceSizeForHeaderInSection _: Int) -> CGSize {
         return CGSize(width: collectionView.bounds.inset(by: collectionView.layoutMargins).width, height: 60)
     }
 }
@@ -142,7 +142,7 @@ private extension ViewController {
 
         return cell
     }
-    
+
     func configureSupplementaryView(
         dataSource: CollectionViewSectionedDataSource<ViewModel.Section>,
         collectionView: UICollectionView,
@@ -154,17 +154,17 @@ private extension ViewController {
             forSupplementaryViewOfKind: kind,
             withReuseIdentifier: "\(TitleView.self)"
         )
-        
+
         guard let header = collectionView.dequeueReusableSupplementaryView(
             ofKind: kind,
             withReuseIdentifier: "\(TitleView.self)",
             for: indexPath
         ) as? TitleView
         else { fatalError("unexpected cell type") }
-        
+
         let title = dataSource.sectionModels[indexPath.section].title
         header.configure(with: title)
-        
+
         return header
     }
 }

@@ -2,7 +2,7 @@ import Foundation
 import ManagedModels
 
 final class ViewModelTransformer {
-    func transform(_ from: TrackResponse, loadingState: LoadingState = .preloading) -> ViewModel {
+    func transform(_ from: TrackResponse, loadingState: ViewModel.LoadingState = .preloading) -> ViewModel {
         let about = ViewModel.Row.about(
             .init(
                 title: from.album.name,
@@ -134,16 +134,9 @@ final class ViewModelTransformer {
     }
 }
 
-extension ViewModelTransformer {
-    enum LoadingState: Int {
-        case preloading
-        case loading
-        case loaded
-        case unavaliable
-
-        fileprivate func asButtonLoadingState() -> DownloadButton.ButtonState {
-            return DownloadButton.ButtonState(rawValue: rawValue) ?? .preloading
-        }
+extension ViewModel.LoadingState {
+    func asButtonLoadingState() -> DownloadButton.ButtonState {
+        return DownloadButton.ButtonState(rawValue: rawValue) ?? .preloading
     }
 }
 

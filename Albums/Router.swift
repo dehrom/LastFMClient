@@ -27,5 +27,11 @@ final class Router: ViewableRouter<Interactable, ViewControllable>, Routing {
         viewController.push(router.viewControllable)
     }
 
+    func closeDetails() {
+        guard let routing = children.first as? Detail.Routing else { return }
+        detachChild(routing)
+        routing.viewControllable.uiviewController.navigationController?.popViewController(animated: true)
+    }
+
     private let detailBuilder: Detail.Buildable
 }

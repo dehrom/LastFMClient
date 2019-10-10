@@ -13,14 +13,14 @@ enum ViewModel {
         var identity: String {
             return title
         }
-        
+
         init(title: String, items: [Row]) {
             self.title = title
             self.items = items
         }
 
         init(original: Section, items: [Row]) {
-            self.title = original.title
+            title = original.title
             self.items = items
         }
 

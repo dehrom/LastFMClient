@@ -10,6 +10,7 @@ import Utils
 
 public protocol Routing: ViewableRouting {
     func routeToDetails(artistName: String, albumTitle: String)
+    func closeDetails()
 }
 
 protocol Presentable: RIBs.Presentable {
@@ -41,6 +42,12 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
     override func didBecomeActive() {
         setupBindings()
         fetch()
+    }
+
+    // MARK: - Detail
+
+    func closeScreen() {
+        router?.closeDetails()
     }
 
     private let fetcher: AlbumsFetchable

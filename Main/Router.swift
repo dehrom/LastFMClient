@@ -39,6 +39,12 @@ final class Router: ViewableRouter<Interactable, ViewControllable>, Routing {
         viewController.present(router.viewControllable)
     }
 
+    func closeDetails() {
+        guard let routing = (children.lazy.compactMap { $0 as? Detail.Routing }.first) else { return }
+        detachChild(routing)
+        routing.viewControllable.uiviewController.dismiss(animated: true, completion: nil)
+    }
+
     func detachChildren() {
         children.forEach(detachChild(_:))
     }

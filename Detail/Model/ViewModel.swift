@@ -36,4 +36,11 @@ extension ViewModel {
         let number: NSAttributedString
         let duration: NSAttributedString
     }
+    
+    enum LoadingState: Int {
+        case preloading
+        case loading
+        case loaded
+        case unavaliable
+    }
 }

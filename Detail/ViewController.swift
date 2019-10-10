@@ -7,6 +7,7 @@ import UIKit
 
 protocol PresentableListener: AnyObject {
     func didPressDownload()
+    func didPressClose()
 }
 
 final class ViewController: UIViewController, Presentable, ViewControllable {
@@ -87,23 +88,24 @@ private extension ViewController {
 
     func setupBindings(_ customView: View) {
         customView.tableView.rx.setDelegate(self).disposed(by: rx.disposeBag)
-        customView.tableView.rx.setDataSource(dataSource).disposed(by: rx.disposeBag)
         
-        relay.flatMap(Observable.from(optional:))
-            .bind(
-                onNext: { [weak self] model in
-                    switch model {
-                    case let .empty(message):
-                        self?.dataSource.setSections([])
-                        customView.tableView.reloadData()
-                        customView.showErrorMessage(message)
-                    case let .models(sections):
-                        customView.hideErrorMessage()
-                        self?.dataSource.setSections(sections)
-                        customView.tableView.reloadData()
-                    }
-                }
-            ).disposed(by: rx.disposeBag)
+        relay.flatMap { model -> Observable<Void> in
+            guard case let .empty(message) = model else { return .empty() }
+            return customView.showErrorMessage(message, withButtonText: "Close").asObservable()
+        }.bind(
+            onNext: { [weak listener] in
+                listener?.didPressClose()
+            }
+        ).disposed(by: rx.disposeBag)
+        
+        relay.map { model -> [ViewModel.Section] in
+            guard case let .models(sections) = model else { return [] }
+            return sections
+        }.filter { $0.isEmpty == false }
+        .do(
+            onNext: { _ in customView.hideErrorMessage() }
+        ).bind(to: customView.tableView.rx.items(dataSource: dataSource))
+        .disposed(by: rx.disposeBag)
     }
 }
 

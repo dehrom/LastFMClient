@@ -11,6 +11,7 @@ import Utils
 public protocol Routing: ViewableRouting {
     func routeToSearchScreen()
     func routeToDetails(artistName: String, albumTitle: String)
+    func closeDetails()
 }
 
 protocol Presentable: RIBs.Presentable {
@@ -44,6 +45,10 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
 
     func didTapOnSearchButton() {
         router?.routeToSearchScreen()
+    }
+
+    func closeScreen() {
+        router?.closeDetails()
     }
 
     private let transformer: ViewModelTransformer

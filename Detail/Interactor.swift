@@ -15,7 +15,9 @@ protocol Presentable: RIBs.Presentable {
     var relay: BehaviorRelay<ViewModel?> { get }
 }
 
-public protocol Listener: AnyObject {}
+public protocol Listener: AnyObject {
+    func closeScreen()
+}
 
 final class Interactor: PresentableInteractor<Presentable>, Interactable, PresentableListener {
     weak var router: Routing?
@@ -39,7 +41,7 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
     }
 
     override func didBecomeActive() {
-        loadingDisposable.disposeOnDeactivate(interactor: self)
+        loadingDisposables.disposeOnDeactivate(interactor: self)
 
         networkStatusStream.flatMap { [fetchFromRemote, fetchFromLocal] (status: NetworkStatus) -> Observable<ViewModel> in
             switch status {
@@ -64,36 +66,18 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
     }
 
     func didPressDownload() {
-        let albumSavingStateCheck = checkExistance().asObservable().share()
+        loadingDisposables = .init()
 
-        let deleteAlbumObservable: Observable<ViewModelTransformer.LoadingState> = albumSavingStateCheck.filter { $0 == true }
-            .flatMap { [deleteAlbum] _ in
-                deleteAlbum().andThen(Observable.just(.preloading))
-                    .catchError {
-                        os_log(.error, log: .logic, "Failed to delete album, error: %@", $0.localizedDescription)
-                        return .just(.loaded)
-                    }
-            }.observeOn(MainScheduler.instance)
-
-        let saveAlbumObservable: Observable<ViewModelTransformer.LoadingState> = albumSavingStateCheck.filter { $0 == false }
-            .flatMap { [saveAlbum] _ in
-                saveAlbum().andThen(Observable.just(.loaded))
-                    .catchError {
-                        os_log(.error, log: .logic, "Failed to save album, error: %@", $0.localizedDescription)
-                        return .just(.preloading)
-                    }.observeOn(MainScheduler.instance)
-            }.startWith(.loading)
-
-        loadingDisposable.disposable = deleteAlbumObservable.ifEmpty(
-            switchTo: saveAlbumObservable
-        ).withLatestFrom(state.flatMap(Observable.from(optional:))) { (loadingState: $0, tracks: $1) }
-            .observeOn(workingScheduler)
-            .map { [viewModelTransformer] in
-                viewModelTransformer.transform($0.tracks, loadingState: $0.loadingState)
-            }.observeOn(MainScheduler.instance)
-            .ifEmpty(default: .empty("Failed to finish saving/deleting process."))
-            .asDriver(onErrorRecover: { _ in .empty() })
-            .drive(presenter.relay)
+        let viewModelDisposable = checkExistance().asObservable().flatMap { [startDeletingSequence, startLoadingSequence] isSaved -> Observable<ViewModel> in
+            isSaved == true ? startDeletingSequence() : startLoadingSequence()
+        }.observeOn(MainScheduler.instance)
+        .asDriver(onErrorJustReturn: .empty("Unknown error"))
+        .drive(presenter.relay)
+        _ = loadingDisposables.insert(viewModelDisposable)
+    }
+    
+    func didPressClose() {
+        listener?.closeScreen()
     }
 
     private let fetcher: TrackFetchable
@@ -104,17 +88,53 @@ final class Interactor: PresentableInteractor<Presentable>, Interactable, Presen
 
     private let workingScheduler = ConcurrentDispatchQueueScheduler(qos: .utility)
 
-    private let state = BehaviorSubject<TrackResponse?>(value: nil)
+    private let tracks = BehaviorSubject<TrackResponse?>(value: nil)
 
-    private var loadingDisposable = SerialDisposable()
+    private var loadingDisposables = CompositeDisposable()
 }
 
 private extension Interactor {
+    func startDeletingSequence() -> Observable<ViewModel> {
+        return deleteAlbum().andThen(
+            Observable.just(ViewModel.empty("Album deleted"))
+        ).catchError {
+            os_log(.error, log: .logic, "Failed to delete album, error: %@", $0.localizedDescription)
+            return .just(.empty("Failed to delete album"))
+        }
+    }
+    
+    func startLoadingSequence() -> Observable<ViewModel> {
+        let saveObservable = saveAlbum().andThen(
+            Observable.just(ViewModel.LoadingState.loaded)
+        ).share()
+        
+        let errorHandlingDisposable = saveObservable.materialize().flatMap {
+            Observable.from(optional: $0.error)
+        }.map { error -> ViewModel in
+            os_log(.error, log: .logic, "Failed to save album, error: %@", error.localizedDescription)
+            return .empty("Failed to save album")
+        }.observeOn(MainScheduler.instance)
+        .bind(to: presenter.relay)
+        _ = loadingDisposables.insert(errorHandlingDisposable)
+        
+        return saveObservable.materialize().flatMap {
+            Observable.from(optional: $0.element)
+        }.withLatestFrom(
+            tracks.flatMap(Observable.from(optional:))
+        ) { (loadingState: $0, tracks: $1) }
+        .map { [viewModelTransformer] in
+            viewModelTransformer.transform($0.tracks, loadingState: $0.loadingState)
+        }.catchError {
+            os_log(.error, log: .logic, "Failed to transform album, error: %@", $0.localizedDescription)
+            return .just(.empty("Failed to save album"))
+        }
+    }
+    
     func saveAlbum() -> Completable {
         return fetcher.fetchArtist(
             for: configuration.artistName
         ).withLatestFrom(
-            state.asObservable().flatMap(Observable.from(optional:))
+            tracks.asObservable().flatMap(Observable.from(optional:))
         ) { (artist: $0, tracks: $1) }
             .flatMap { [albumSaver, workingScheduler] in
                 albumSaver.saveAlbum(with: $0.tracks, and: $0.artist).subscribeOn(workingScheduler)
@@ -162,8 +182,8 @@ private extension Interactor {
         ).share()
 
         source.subscribe(
-            onNext: { [state] model in
-                state.onNext(model)
+            onNext: { [tracks] model in
+                tracks.onNext(model)
             }
         ).disposeOnDeactivate(interactor: self)
 
@@ -191,5 +211,12 @@ private extension Interactor {
         }.asObservable()
             .flatMap(Observable.from(optional:))
             .map { [viewModelTransformer] in viewModelTransformer.transform($0) }
+    }
+    
+    enum State {
+        case unavaliable(String)
+        case preloading
+        case loading
+        case loaded
     }
 }
