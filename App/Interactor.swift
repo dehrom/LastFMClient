@@ -49,8 +49,7 @@ private extension Interactor {
             let manager = reachabilityManager,
             manager.startListening() == true
         else {
-            os_log(.fault, log: .structure, "failed to start listening network status", "")
-            return
+            fatalError("Failed to start listening network status.")
         }
     }
 }

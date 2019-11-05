@@ -70,8 +70,8 @@ private extension ViewController {
                 .rx
                 .controlEvent(.touchUpInside)
                 .bind(
-                    onNext: { [weak self] in
-                        self?.listener?.didPressDownload()
+                    onNext: { [unowned self] in
+                        self.listener?.didPressDownload()
                     }
                 ).disposed(by: cell.rx.disposeBag)
             return cell

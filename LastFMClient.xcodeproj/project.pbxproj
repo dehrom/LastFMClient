@@ -100,7 +100,6 @@
 		EFC48F27232291D90086314A /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F26232291D90086314A /* SearchResponse.swift */; };
 		EFC48F2A23260F290086314A /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F2923260F290086314A /* Cell.swift */; };
 		EFC48F2C23260F8F0086314A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F2B23260F8F0086314A /* ViewModel.swift */; };
-		EFC48F2E23260FC60086314A /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F2D23260FC60086314A /* SectionHeader.swift */; };
 		EFC48F30232610010086314A /* ViewModelTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F2F232610010086314A /* ViewModelTransformer.swift */; };
 		EFC48F342326134D0086314A /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F332326134D0086314A /* Stream.swift */; };
 		EFC48F39232620890086314A /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC48F35232620890086314A /* Router.swift */; };
@@ -449,7 +448,6 @@
 		EFC48F26232291D90086314A /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
 		EFC48F2923260F290086314A /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
 		EFC48F2B23260F8F0086314A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
-		EFC48F2D23260FC60086314A /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		EFC48F2F232610010086314A /* ViewModelTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelTransformer.swift; sourceTree = "<group>"; };
 		EFC48F332326134D0086314A /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
 		EFC48F35232620890086314A /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -872,7 +870,6 @@
 			isa = PBXGroup;
 			children = (
 				EFC48F2923260F290086314A /* Cell.swift */,
-				EFC48F2D23260FC60086314A /* SectionHeader.swift */,
 				EF0248A0232F4E7000CFC71A /* View.swift */,
 			);
 			path = View;
@@ -1533,7 +1530,6 @@
 				EF0248A2232F4EDE00CFC71A /* View.swift in Sources */,
 				EFC48F27232291D90086314A /* SearchResponse.swift in Sources */,
 				EFC48F2C23260F8F0086314A /* ViewModel.swift in Sources */,
-				EFC48F2E23260FC60086314A /* SectionHeader.swift in Sources */,
 				EF493EBF2329C59E00124F5F /* ExtendedDependency.swift in Sources */,
 				EFC48F1B232168DA0086314A /* ViewController.swift in Sources */,
 				EFC48F1A232168DA0086314A /* Router.swift in Sources */,

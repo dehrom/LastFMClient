@@ -103,6 +103,6 @@ private extension Interactor {
                 return .just(.empty("Failed to fetch saved albums"))
             }
         ).drive(presenter.relay)
-        .disposeOnDeactivate(interactor: self)
+            .disposeOnDeactivate(interactor: self)
     }
 }

@@ -60,7 +60,7 @@ private extension Router {
         viewControllable.uiviewController
             .rx
             .showingStateObserver(for: .didShow)
-            .bind(onNext: { [weak self] _ in self?.detachChildren() })
+            .bind(onNext: { [unowned self] _ in self.detachChildren() })
             .disposed(by: disposeBag)
     }
 }

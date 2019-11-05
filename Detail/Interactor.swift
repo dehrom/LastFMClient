@@ -106,9 +106,9 @@ private extension Interactor {
     func startLoadingSequence() -> Observable<ViewModel> {
         let saveObservable = saveAlbum().andThen(
             Observable.just(ViewModel.LoadingState.loaded)
-        ).share()
+        ).materialize().share()
 
-        let errorHandlingDisposable = saveObservable.materialize().flatMap {
+        let errorHandlingDisposable = saveObservable.flatMap {
             Observable.from(optional: $0.error)
         }.map { error -> ViewModel in
             os_log(.error, log: .logic, "Failed to save album, error: %@", error.localizedDescription)
@@ -117,7 +117,7 @@ private extension Interactor {
             .bind(to: presenter.relay)
         _ = loadingDisposables.insert(errorHandlingDisposable)
 
-        return saveObservable.materialize().flatMap {
+        return saveObservable.flatMap {
             Observable.from(optional: $0.element)
         }.withLatestFrom(
             tracks.flatMap(Observable.from(optional:))
